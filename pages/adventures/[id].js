@@ -1,15 +1,13 @@
 import Layout from '../../components/layout'
 import { getAdventurePaths, getAdventureByPath } from '../../lib/adventures'
 import Head from 'next/head'
-import Link from 'next/link'
 import utilStyles from '../../styles/utils.module.css'
-import styles from '../../components/layout.module.css'
 
 const assetServer = 'https://publish-p22654-e59315.adobeaemcloud.com'
 
 export default function Adventure({ adventure }) {
   return (
-    <Layout>
+    <Layout adventure>
       <Head>
         <title>{adventure.adventureTitle}</title>
       </Head>
@@ -21,11 +19,6 @@ export default function Adventure({ adventure }) {
         <img height="300px" alt={adventure.adventureTitle} src={`${assetServer}${adventure.adventurePrimaryImage._path}`}/>
         <div dangerouslySetInnerHTML={{ __html: adventure.adventureDescription.html }} />
       </article>
-      <div className={styles.backToHome}>
-        <Link href="/adventures">
-          <a>← All adventures</a>
-        </Link>
-      </div>
     </Layout>
   )
 }

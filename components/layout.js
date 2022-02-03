@@ -7,7 +7,7 @@ import Link from 'next/link'
 const name = '[Your Name]'
 export const siteTitle = 'WKND'
 
-export default function Layout({ children, home }) {
+export default function Layout({ children, adventure }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -25,7 +25,21 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <header className={styles.header}>
+      {!adventure && (
+        <div className={styles.backToHome}>
+          <Link href="/">
+            <a>← Back to home</a>
+          </Link>
+        </div>
+      )}
+      {adventure && (
+        <div className={styles.backToHome}>
+          <Link href="/adventures">
+          <a>← All adventures</a>
+        </Link>
+        </div>
+      )}
+      {/* <header className={styles.header}>
         {home ? (
           <>
             <Image
@@ -59,7 +73,7 @@ export default function Layout({ children, home }) {
             </h2>
           </>
         )}
-      </header>
+      </header> */}
       <main>{children}</main>
     </div>
   )

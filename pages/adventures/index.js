@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Layout, { siteTitle } from '../../components/layout'
+import Layout from '../../components/layout'
 import utilStyles from '../../styles/utils.module.css'
 import { getAdventures } from '../../lib/adventures'
 import Link from 'next/link'
@@ -8,12 +8,12 @@ const assetServer = 'https://publish-p22654-e59315.adobeaemcloud.com'
 
 export default function Adventures({ adventures }) {
   return (
-    <Layout home>
+    <Layout>
       <Head>
         <title>Adventures</title>
       </Head>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>All adventures</h2>
+        <h1 className={utilStyles.headingXl}>All adventures</h1>
         <ul className={utilStyles.list}>
           {adventures.map(({ _path, adventureTitle, adventureDescription, adventurePrimaryImage }) => {
             const pathItems = _path.split("/")
@@ -21,7 +21,7 @@ export default function Adventures({ adventures }) {
             return (
               <div key={_path}>
                 <Link href={path}><a>
-                  <h1>{adventureTitle}</h1>
+                  <h2>{adventureTitle}</h2>
                 </a></Link>
                 <img height="300px" alt={adventureTitle} src={`${assetServer}${adventurePrimaryImage._path}`}/>
                 <p>{adventureDescription.plaintext}</p>
