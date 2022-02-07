@@ -2,9 +2,9 @@ import Head from 'next/head'
 import Layout from '../../components/layout'
 import utilStyles from '../../styles/utils.module.css'
 import { getAdventures } from '../../lib/adventures'
-import Link from 'next/link'
+import ListItem from '../../components/ListItem'
 
-const assetServer = 'https://publish-p22654-e59315.adobeaemcloud.com'
+const { NEXT_PUBLIC_AEM_HOST } = process.env
 
 export default function Adventures({ adventures }) {
   return (
@@ -19,13 +19,12 @@ export default function Adventures({ adventures }) {
             const pathItems = _path.split("/")
             const path = `/adventures/${pathItems[pathItems.length - 2]}`
             return (
-              <div key={_path}>
-                <Link href={path}><a>
-                  <h2>{adventureTitle}</h2>
-                </a></Link>
-                <img height="300px" alt={adventureTitle} src={`${assetServer}${adventurePrimaryImage._path}`}/>
-                <p>{adventureDescription.plaintext}</p>
-              </div>
+              <ListItem
+                key={_path}
+                path={path}
+                title={adventureTitle}
+                description={adventureDescription.plaintext}
+                imageSrc={`${NEXT_PUBLIC_AEM_HOST}${adventurePrimaryImage._path}`} />
             )
           })}
         </ul>

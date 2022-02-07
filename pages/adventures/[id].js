@@ -3,7 +3,7 @@ import { getAdventurePaths, getAdventureByPath } from '../../lib/adventures'
 import Head from 'next/head'
 import utilStyles from '../../styles/utils.module.css'
 
-const assetServer = 'https://publish-p22654-e59315.adobeaemcloud.com'
+const { NEXT_PUBLIC_AEM_HOST } = process.env
 
 export default function Adventure({ adventure }) {
   return (
@@ -16,7 +16,7 @@ export default function Adventure({ adventure }) {
         <div className={utilStyles.lightText}>
           <p>{adventure.adventureType}</p>
         </div>
-        <img height="300px" alt={adventure.adventureTitle} src={`${assetServer}${adventure.adventurePrimaryImage._path}`}/>
+        <img height="300px" alt={adventure.adventureTitle} src={`${NEXT_PUBLIC_AEM_HOST}${adventure.adventurePrimaryImage._path}`}/>
         <div dangerouslySetInnerHTML={{ __html: adventure.adventureDescription.html }} />
       </article>
     </Layout>

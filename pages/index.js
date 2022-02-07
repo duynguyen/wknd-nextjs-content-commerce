@@ -19,10 +19,10 @@ export default function Home() {
         </p>
 
         <div className="grid">
-          <Link href="/adventures"><a className="card">
-            <h3>Magazine &rarr;</h3>
+          <Link href="/blog"><a className="card">
+            <h3>Blog &rarr;</h3>
             <p>
-              Latest news.
+              Editable blog page in AEM.
             </p>
           </a></Link>
           <Link href="/adventures"><a className="card">
