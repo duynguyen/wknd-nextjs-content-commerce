@@ -37,7 +37,7 @@ export default function About({ model }) {
 }
 
 export async function getStaticProps() {
-  const model = await getPageModel('/content/s504-wknd-app/us/en/about')
+  const model = await getPageModel('/content/s504-wknd-app/us/en/new-home')
   console.log(model)
   return {
     props: {
