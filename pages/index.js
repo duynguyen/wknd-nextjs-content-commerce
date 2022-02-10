@@ -35,14 +35,14 @@ export default function Home() {
           <Link href="/faq"><a className="card">
             <h3>FAQs &rarr;</h3>
             <p>
-              Find answers to your questions.
+              Find answers to your questions. Testing About with itemPath.
             </p>
           </a></Link>
 
           <Link href="/about"><a className="card">
             <h3>About &rarr;</h3>
             <p>
-              Learn more about us.
+              Learn more about us. Using Page component API.
             </p>
           </a></Link>
         </div>
