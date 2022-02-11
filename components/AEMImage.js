@@ -10,7 +10,7 @@ export const ImageEditConfig = {
     isEmpty: function(props) {
         return !props || !props.src || props.src.trim().length < 1;
     },
-    resourceType: 's504-wknd-app/components/image'
+    resourceType: 'wknd-app/components/image'
 };
 
 export default class Image extends Component {

@@ -1,19 +1,20 @@
 import Head from 'next/head'
-import { ModelManager, ModelClient, Constants } from '@adobe/aem-spa-page-model-manager'
+import { ModelManager, Constants } from '@adobe/aem-spa-page-model-manager'
+import CustomModelClient from '../../lib/CustomModelClient'
 import Layout from '../../components/layout'
 import utilStyles from '../../styles/utils.module.css'
 import { getPageModel } from '../../lib/pages'
 
 import '../../components/import-components'
-
 import ResponsiveGrid from '../../components/AEMResponsiveGrid'
 
 const { NEXT_PUBLIC_AEM_HOST } = process.env
+const PAGE_PATH='/content/wknd-app/us/en/next-home'
+const modelClient = new CustomModelClient(NEXT_PUBLIC_AEM_HOST)
 
 export default function About({ model }) {
-  const modelClient = new ModelClient(NEXT_PUBLIC_AEM_HOST)
   ModelManager.initialize({
-    path: '/',
+    path: PAGE_PATH,
     modelClient,
     model
   })
@@ -23,6 +24,7 @@ export default function About({ model }) {
         <title>{model.title}</title>
       </Head>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <p>A paragraph in React.</p>
         {/* <ResponsiveGrid
           itemPath='root/responsivegrid'/> */}
         <ResponsiveGrid
@@ -37,7 +39,7 @@ export default function About({ model }) {
 }
 
 export async function getStaticProps() {
-  const model = await getPageModel('/content/s504-wknd-app/us/en/new-home')
+  const model = await getPageModel(PAGE_PATH)
   console.log(model)
   return {
     props: {

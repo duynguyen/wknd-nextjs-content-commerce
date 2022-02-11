@@ -3,6 +3,6 @@ import { Text, TextEditConfig } from './AEMText'
 import { Title, TitleEditConfig } from './AEMTitle'
 import Image, { ImageEditConfig } from './AEMImage'
 
-MapTo('s504-wknd-app/components/title')(Title, TitleEditConfig)
-MapTo('s504-wknd-app/components/text')(Text, TextEditConfig)
-MapTo('s504-wknd-app/components/image')(Image, ImageEditConfig)
+MapTo('wknd-app/components/title')(Title, TitleEditConfig)
+MapTo('wknd-app/components/text')(Text, TextEditConfig)
+MapTo('wknd-app/components/image')(Image, ImageEditConfig)

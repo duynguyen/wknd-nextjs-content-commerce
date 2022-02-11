@@ -6,7 +6,7 @@ export const TextEditConfig = {
     isEmpty: function(props) {
         return !props || !props.text || props.text.trim().length < 1;
     },
-    resourceType: 's504-wknd-app/components/text'
+    resourceType: 'wknd-app/components/text'
 };
 
 export const Text = ({ cqPath, richText, text }) => {

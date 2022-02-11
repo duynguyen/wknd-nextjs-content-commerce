@@ -5,7 +5,7 @@ import { TitleV2IsEmptyFn } from '@adobe/aem-core-components-react-base'
 export const TitleEditConfig = {
     emptyLabel: 'Title',
     isEmpty: TitleV2IsEmptyFn,
-    resourceType: 's504-wknd-app/components/title'
+    resourceType: 'wknd-app/components/title'
 };
 
 export const Title = ({ text }) => {
