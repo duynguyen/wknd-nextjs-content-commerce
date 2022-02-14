@@ -22,27 +22,27 @@ export default function Home() {
           <Link href="/blog"><a className="card">
             <h3>Blog &rarr;</h3>
             <p>
-              Editable blog page in AEM.
+              Rendering page models from AEM.
             </p>
           </a></Link>
           <Link href="/adventures"><a className="card">
             <h3>Adventures &rarr;</h3>
             <p>
-              Current adventures.
+              WKND adventures from content fragments.
             </p>
           </a></Link>
 
-          <Link href="/faq"><a className="card">
-            <h3>FAQs &rarr;</h3>
+          <Link href="/editable"><a className="card">
+            <h3>Editable &rarr;</h3>
             <p>
-              Find answers to your questions. Testing About with itemPath.
+              Using newer Editable Component API, hydrated after page load.
             </p>
           </a></Link>
 
-          <Link href="/about"><a className="card">
-            <h3>About &rarr;</h3>
+          <Link href="/uneditable"><a className="card">
+            <h3>Not editable &rarr;</h3>
             <p>
-              Learn more about us. Using Page component API.
+              Using older Editable Component API, HTML generated on the server.
             </p>
           </a></Link>
         </div>

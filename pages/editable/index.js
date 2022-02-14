@@ -12,9 +12,9 @@ const NEXT_PUBLIC_AEM_HOST = process.env.NEXT_PUBLIC_AEM_HOST
 const NEXT_PUBLIC_AEM_SITE = process.env.NEXT_PUBLIC_AEM_SITE
 
 const PAGE_PATH=`/content/${NEXT_PUBLIC_AEM_SITE}/us/en/next-home`
-const modelClient = new CustomModelClient(NEXT_PUBLIC_AEM_HOST)
 
-export default function About({ model }) {
+export default function Editable({ model }) {
+  const modelClient = new CustomModelClient(NEXT_PUBLIC_AEM_HOST)
   ModelManager.initialize({
     path: PAGE_PATH,
     modelClient,
@@ -27,13 +27,9 @@ export default function About({ model }) {
       </Head>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <p>A paragraph in React.</p>
-        {/* <ResponsiveGrid
-          itemPath='root/responsivegrid'/> */}
         <ResponsiveGrid
-          cqChildren={model[Constants.CHILDREN_PROP]}
-          cqItems={model[Constants.ITEMS_PROP]}
-          cqItemsOrder={model[Constants.ITEMS_ORDER_PROP]}
-          cqPath={model[Constants.PATH_PROP]}
+          pagePath={PAGE_PATH}
+          itemPath='root/responsivegrid'
         />
       </section>
     </Layout>

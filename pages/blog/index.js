@@ -7,6 +7,7 @@ import { AEMTitle } from '../../components/AEMTitle'
 import { AEMImage } from '../../components/AEMImage'
 import { AEMText } from '../../components/AEMText'
 import { getPageModel } from '../../lib/pages'
+import ResponsiveGrid from '../../components/AEMResponsiveGrid'
 
 const NEXT_PUBLIC_AEM_HOST = process.env.NEXT_PUBLIC_AEM_HOST
 const NEXT_PUBLIC_AEM_SITE = process.env.NEXT_PUBLIC_AEM_SITE
@@ -27,6 +28,12 @@ export default function Blog({ model }) {
       </Head>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         {/* <h1 className={utilStyles.headingXl}>My Blog</h1> */}
+        <h1>--- Rendering entire container in responsive grid ---</h1>
+        <ResponsiveGrid
+          pagePath={PAGE_PATH}
+          itemPath='root/responsivegrid'
+        />
+        <h1>--- Rendering individual components ---</h1>
         <AEMTitle
           pagePath={PAGE_PATH}
           itemPath='root/responsivegrid/title'
@@ -39,15 +46,6 @@ export default function Blog({ model }) {
           pagePath={PAGE_PATH}
           itemPath='root/responsivegrid/text'
         />
-        {/* <AEMTitle
-          pagePath='/content/s504-wknd-app/us/en/next-home'
-          itemPath='root/responsivegrid/title' />
-        <AEMImage
-          pagePath='/content/s504-wknd-app/us/en/next-home'
-          itemPath='root/responsivegrid/image'/>
-        <AEMText
-          pagePath='/content/s504-wknd-app/us/en/next-home'
-          itemPath='root/responsivegrid/text'/> */}
       </section>
     </Layout>
   )
