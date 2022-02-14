@@ -36,7 +36,7 @@ export default function Editable({ model }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const model = await getPageModel(PAGE_PATH)
   console.log(model)
   return {
