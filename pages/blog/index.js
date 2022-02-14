@@ -8,8 +8,10 @@ import { AEMImage } from '../../components/AEMImage'
 import { AEMText } from '../../components/AEMText'
 import { getPageModel } from '../../lib/pages'
 
-const { NEXT_PUBLIC_AEM_HOST } = process.env
-const PAGE_PATH='/content/wknd-app/us/en/next-home'
+const NEXT_PUBLIC_AEM_HOST = process.env.NEXT_PUBLIC_AEM_HOST
+const NEXT_PUBLIC_AEM_SITE = process.env.NEXT_PUBLIC_AEM_SITE
+
+const PAGE_PATH=`/content/${NEXT_PUBLIC_AEM_SITE}/us/en/next-home`
 
 export default function Blog({ model }) {
   const modelClient = new CustomModelClient(NEXT_PUBLIC_AEM_HOST)

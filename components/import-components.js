@@ -3,6 +3,8 @@ import { Text, TextEditConfig } from './AEMText'
 import { Title, TitleEditConfig } from './AEMTitle'
 import Image, { ImageEditConfig } from './AEMImage'
 
-MapTo('wknd-app/components/title')(Title, TitleEditConfig)
-MapTo('wknd-app/components/text')(Text, TextEditConfig)
-MapTo('wknd-app/components/image')(Image, ImageEditConfig)
+const { NEXT_PUBLIC_AEM_SITE } = process.env;
+
+MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/title`)(Title, TitleEditConfig)
+MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/text`)(Text, TextEditConfig)
+MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/image`)(Image, ImageEditConfig)

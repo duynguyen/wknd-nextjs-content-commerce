@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withMappable } from '@adobe/aem-react-editable-components';
 
-const { NEXT_PUBLIC_AEM_HOST } = process.env;
+const NEXT_PUBLIC_AEM_HOST = process.env.NEXT_PUBLIC_AEM_HOST;
+const NEXT_PUBLIC_AEM_SITE = process.env.NEXT_PUBLIC_AEM_SITE;
 
 export const ImageEditConfig = {
 
@@ -10,7 +11,7 @@ export const ImageEditConfig = {
     isEmpty: function(props) {
         return !props || !props.src || props.src.trim().length < 1;
     },
-    resourceType: 'wknd-app/components/image'
+    resourceType: `${NEXT_PUBLIC_AEM_SITE}/components/image`
 };
 
 export default class Image extends Component {
