@@ -12,6 +12,8 @@
     "@adobe/aem-react-editable-components": "file:adobe-aem-react-editable-components-1.1.10.tgz",
     "@adobe/aem-spa-component-mapping": "^1.1.1",
     "@adobe/aem-spa-page-model-manager": "^1.4.0",
+    "@apollo/client": "^3.5.10",
+    "graphql": "^16.3.0",
     "next": "latest",
     "prop-types": "^15.7.2",
     "react": "17.0.2",
