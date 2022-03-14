@@ -1,6 +1,4 @@
 import Head from 'next/head'
-import { ModelManager, Constants } from '@adobe/aem-spa-page-model-manager'
-import CustomModelClient from '../../lib/CustomModelClient'
 import Layout from '../../components/layout'
 import utilStyles from '../../styles/utils.module.css'
 import { getPageModel } from '../../lib/pages'
@@ -8,18 +6,11 @@ import { getPageModel } from '../../lib/pages'
 import '../../components/import-components'
 import ResponsiveGrid from '../../components/AEMResponsiveGrid'
 
-const NEXT_PUBLIC_AEM_HOST = process.env.NEXT_PUBLIC_AEM_HOST
 const NEXT_PUBLIC_AEM_SITE = process.env.NEXT_PUBLIC_AEM_SITE
 
 const PAGE_PATH=`/content/${NEXT_PUBLIC_AEM_SITE}/us/en/next-home`
 
 export default function Editable({ model }) {
-  const modelClient = new CustomModelClient(NEXT_PUBLIC_AEM_HOST)
-  ModelManager.initialize({
-    path: PAGE_PATH,
-    modelClient,
-    model
-  })
   return (
     <Layout>
       <Head>
@@ -28,6 +19,7 @@ export default function Editable({ model }) {
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <p>A paragraph in React.</p>
         <ResponsiveGrid
+          model={model[':items']['root'][':items']['responsivegrid']}
           pagePath={PAGE_PATH}
           itemPath='root/responsivegrid'
         />

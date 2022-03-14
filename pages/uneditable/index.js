@@ -1,6 +1,5 @@
 import Head from 'next/head'
-import { ModelManager, Constants } from '@adobe/aem-spa-page-model-manager'
-import CustomModelClient from '../../lib/CustomModelClient'
+import { Constants } from '@adobe/aem-spa-page-model-manager'
 import Layout from '../../components/layout'
 import utilStyles from '../../styles/utils.module.css'
 import { getPageModel } from '../../lib/pages'
@@ -8,18 +7,12 @@ import { getPageModel } from '../../lib/pages'
 import '../../components/import-components'
 import ResponsiveGrid from '../../components/AEMResponsiveGrid'
 
-const NEXT_PUBLIC_AEM_HOST = process.env.NEXT_PUBLIC_AEM_HOST
 const NEXT_PUBLIC_AEM_SITE = process.env.NEXT_PUBLIC_AEM_SITE
 
 const PAGE_PATH=`/content/${NEXT_PUBLIC_AEM_SITE}/us/en/next-home`
-const modelClient = new CustomModelClient(NEXT_PUBLIC_AEM_HOST)
 
 export default function Uneditable({ model }) {
-  ModelManager.initialize({
-    path: PAGE_PATH,
-    modelClient,
-    model
-  })
+  const item = model[':items']['root'][':items']['responsivegrid']
   return (
     <Layout>
       <Head>
@@ -30,9 +23,10 @@ export default function Uneditable({ model }) {
         {/* <ResponsiveGrid
           itemPath='root/responsivegrid'/> */}
         <ResponsiveGrid
-          cqChildren={model[Constants.CHILDREN_PROP]}
-          cqItems={model[Constants.ITEMS_PROP]}
-          cqItemsOrder={model[Constants.ITEMS_ORDER_PROP]}
+          cqChildren={item[Constants.CHILDREN_PROP]}
+          cqItems={item[Constants.ITEMS_PROP]}
+          cqItemsOrder={item[Constants.ITEMS_ORDER_PROP]}
+          model={item}
           cqPath={model[Constants.PATH_PROP]}
         />
       </section>
