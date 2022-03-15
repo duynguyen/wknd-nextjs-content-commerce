@@ -1,12 +1,24 @@
 import Head from 'next/head';
 import { gql } from '@apollo/client';
+import { Utils } from '@adobe/aem-react-editable-components';
+
 import client from '../../../lib/CommerceGraphQLClient';
+import ResponsiveGrid from '../../../components/AEMResponsiveGrid';
 import CommerceProductDetail from '../../../components/CommerceProductDetail';
 import styles from '../../../styles/Product.module.css';
+import { getComponentModel, getPageModel } from '../../../lib/pages';
 
 const { NEXT_PUBLIC_AEM_PATH } = process.env;
 
-export default function ProductPage({ pagePath, slug, product }) {
+export default function ProductPage({ pagePath, product, pageModel }) {
+
+    const topContentModel = Utils.modelToProps(
+        getComponentModel(pageModel, 'top')
+    );
+    const bottomContentModel = Utils.modelToProps(
+        getComponentModel(pageModel, 'bottom')
+    );
+
     return (
         <>
             <Head>
@@ -14,11 +26,21 @@ export default function ProductPage({ pagePath, slug, product }) {
             </Head>
             <main className={styles.main}>
                 <div className={styles.content}>
-                    <p>AEM Content PlaceHolder</p>
+                    <ResponsiveGrid
+                        {...topContentModel}
+                        model={topContentModel}
+                        pagePath={pagePath}
+                        itemPath="top"
+                    />
                 </div>
-                <CommerceProductDetail product={product}/>
+                <CommerceProductDetail product={product} />
                 <div className={styles.content}>
-                    <p>AEM Content PlaceHolder</p>
+                    <ResponsiveGrid
+                        {...bottomContentModel}
+                        model={bottomContentModel}
+                        pagePath={pagePath}
+                        itemPath="bottom"
+                    />
                 </div>
             </main>
         </>
@@ -26,12 +48,14 @@ export default function ProductPage({ pagePath, slug, product }) {
 }
 
 export async function getServerSideProps(context) {
+    console.log(context);
     const slug = context.params.slug;
-    const pagePath = `${NEXT_PUBLIC_AEM_PATH}/catalog/product`;
 
-    //  TODO: fetch from AEM and Commerce
-    //const [adobeCommerce, aem] = await Promise.all([
-    const [adobeCommerce] = await Promise.all([
+
+
+    const pagePath = `${NEXT_PUBLIC_AEM_PATH}/catalog/product/` + slug.join('/');
+
+    const [adobeCommerce, aemModel] = await Promise.all([
         client.query({
             query: gql`{
             products(filter: {url_key: {eq: "${slug}"}}) {
@@ -56,15 +80,16 @@ export async function getServerSideProps(context) {
                 }
             }
         }`
-        })
+        }),
+        getPageModel(pagePath)
     ]);
     const product = adobeCommerce?.data?.products?.items[0];
 
     return {
         props: {
             pagePath,
-            product: product,
-            slug: slug.join('/')
+            product,
+            pageModel: aemModel
         }
     };
 }
