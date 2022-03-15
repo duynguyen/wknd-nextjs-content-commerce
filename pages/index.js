@@ -9,7 +9,7 @@ import ResponsiveGrid from '../components/AEMResponsiveGrid'
 
 const { NEXT_PUBLIC_AEM_PATH } = process.env;
 
-export default function ContentPage({ pagePath, pageModel }) {
+export default function ContentPage({ pagePath, pageModel, navigationItems }) {
   const rootModel = Utils.modelToProps(getComponentModel(pageModel, 'root'));
 
   return (
