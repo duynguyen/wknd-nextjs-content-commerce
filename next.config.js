@@ -34,24 +34,5 @@ module.exports = {
                 destination: '/api/proxy/.model.json'
             }
         ]
-    },
-    webpack(config) {
-        config.plugins.push(new WebpackAssetsManifest({
-            output: '../public/asset-manifest.json',
-            transform: assets => {
-                const entrypoints = [];
-                for (let file in assets) {
-                    if (assets[file].endsWith('.js') || assets[file].endsWith('.css')) {
-                        entrypoints.push(assets[file]);
-                    }
-                }
-                return {
-                    files: assets,
-                    entrypoints: entrypoints
-                };
-            }
-        }));
-
-        return config;
     }
 };
