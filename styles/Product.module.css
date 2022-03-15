@@ -15,6 +15,7 @@
 }
 
 .grid {
+    width: 75%;
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-template-rows: 0.25fr 1fr 1fr;
@@ -36,7 +37,8 @@
 
 .image {
     grid-area: Image;
-    text-align: center;
+    text-align: right;
+    margin-right: 5rem;
 }
 
 .details {
