@@ -1,0 +1,33 @@
+{
+  "files": {
+    "/_error.js": "static/chunks//_error.js",
+    "amp.js": "static/chunks/amp.js",
+    "build-manifest.json": "build-manifest.json",
+    "main.js": "static/chunks/main.js",
+    "pages/_app.js": "static/chunks/pages/_app.js",
+    "pages/_error.js": "static/chunks/pages/_error.js",
+    "pages/index.js": "static/chunks/pages/index.js",
+    "react-loadable-manifest.json": "react-loadable-manifest.json",
+    "react-refresh.js": "static/chunks/react-refresh.js",
+    "server/middleware-manifest.json": "server/middleware-manifest.json",
+    "static/chunks/polyfills.js": "static/chunks/polyfills.js",
+    "static/development/_buildManifest.js": "static/development/_buildManifest.js",
+    "static/development/_middlewareManifest.js": "static/development/_middlewareManifest.js",
+    "static/development/_ssgManifest.js": "static/development/_ssgManifest.js",
+    "webpack.js": "static/chunks/webpack.js"
+  },
+  "entrypoints": [
+    "static/chunks//_error.js",
+    "static/chunks/amp.js",
+    "static/chunks/main.js",
+    "static/chunks/pages/_app.js",
+    "static/chunks/pages/_error.js",
+    "static/chunks/pages/index.js",
+    "static/chunks/react-refresh.js",
+    "static/chunks/polyfills.js",
+    "static/development/_buildManifest.js",
+    "static/development/_middlewareManifest.js",
+    "static/development/_ssgManifest.js",
+    "static/chunks/webpack.js"
+  ]
+}

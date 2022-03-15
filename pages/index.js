@@ -1,32 +1,40 @@
+import { Utils } from '@adobe/aem-react-editable-components';
 import Head from 'next/head'
+import { getComponentModel, getPageModel } from '../lib/pages';
+
+// import '../../components/import-components'
+import ResponsiveGrid from '../components/AEMResponsiveGrid'
 
 const { NEXT_PUBLIC_AEM_PATH } = process.env;
 
-export default function ContentPage({ path }) {
-    const pagePath = `${NEXT_PUBLIC_AEM_PATH}`;
+export default function ContentPage({ pagePath, pageModel }) {
+  const rootModel = Utils.modelToProps(getComponentModel(pageModel, 'root'));
 
-    // TODO: render the editable grid
-
-    return (
-        <>
-            <Head>
-                <title>foobar</title>
-            </Head>
-            <article>
-                ordinary page: 
-                {pagePath}
-            </article>
-        </>
-    );
+  return (
+    <>
+      <Head>
+        <title>{pageModel.title}</title>
+      </Head>
+      <div className='root container responsivegrid'>
+        <ResponsiveGrid
+          {...rootModel}
+          model={rootModel}
+          pagePath={pagePath}
+          itemPath='root'
+        />
+      </div>
+    </>
+  );
 }
 
-
 export async function getServerSideProps(context) {
-    // TODO: fetch model of any content page
+  const pagePath = `${NEXT_PUBLIC_AEM_PATH}`;
+  const pageModel = await getPageModel(pagePath);
 
-    return {
-        props: {
-           
-        }
+  return {
+    props: {
+      pagePath,
+      pageModel
     }
+  }
 }
