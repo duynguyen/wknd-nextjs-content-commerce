@@ -1,13 +1,11 @@
 {
   "files": {
-    "/_error.js": "static/chunks//_error.js",
     "amp.js": "static/chunks/amp.js",
     "build-manifest.json": "build-manifest.json",
     "main.js": "static/chunks/main.js",
-    "pages/[...path].js": "static/chunks/pages/[...path].js",
     "pages/_app.js": "static/chunks/pages/_app.js",
     "pages/_error.js": "static/chunks/pages/_error.js",
-    "pages/index.js": "static/chunks/pages/index.js",
+    "pages/catalog/product/[...slug].js": "static/chunks/pages/catalog/product/[...slug].js",
     "react-loadable-manifest.json": "react-loadable-manifest.json",
     "react-refresh.js": "static/chunks/react-refresh.js",
     "server/middleware-manifest.json": "server/middleware-manifest.json",
@@ -18,13 +16,11 @@
     "webpack.js": "static/chunks/webpack.js"
   },
   "entrypoints": [
-    "static/chunks//_error.js",
     "static/chunks/amp.js",
     "static/chunks/main.js",
-    "static/chunks/pages/[...path].js",
     "static/chunks/pages/_app.js",
     "static/chunks/pages/_error.js",
-    "static/chunks/pages/index.js",
+    "static/chunks/pages/catalog/product/[...slug].js",
     "static/chunks/react-refresh.js",
     "static/chunks/polyfills.js",
     "static/development/_buildManifest.js",

@@ -2,6 +2,9 @@ const WebpackAssetsManifest = require('webpack-assets-manifest');
 
 module.exports = {
     reactStrictMode: true,
+    images: {
+        domains: ['jnz3dtiuj77ca.dummycachetest.com']
+    },
     async headers() {
         return [
             {
