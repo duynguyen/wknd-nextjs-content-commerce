@@ -3,8 +3,6 @@ import { Text, TextEditConfig } from './AEMText'
 import { Title, TitleEditConfig } from './AEMTitle'
 import Image, { ImageEditConfig } from './AEMImage'
 
-const { NEXT_PUBLIC_AEM_SITE } = process.env;
-
-MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/title`)(Title, TitleEditConfig)
-MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/text`)(Text, TextEditConfig)
-MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/image`)(Image, ImageEditConfig)
+MapTo(`editorxpdevelopment/components/content/title`)(Title, TitleEditConfig)
+MapTo(`editorxpdevelopment/components/content/text`)(Text, TextEditConfig)
+MapTo(`editorxpdevelopment/components/content/image`)(Image, ImageEditConfig)

@@ -8,7 +8,7 @@ export const TextEditConfig = {
     isEmpty: function(props) {
         return !props || !props.text || props.text.trim().length < 1;
     },
-    resourceType: `${NEXT_PUBLIC_AEM_SITE}/components/text`
+    resourceType: `editorxpdevelopment/components/content/text`
 };
 
 export const Text = ({ cqPath, richText, text }) => {

@@ -8,7 +8,7 @@ import ResponsiveGrid from '../../components/AEMResponsiveGrid'
 
 const NEXT_PUBLIC_AEM_SITE = process.env.NEXT_PUBLIC_AEM_SITE
 
-const PAGE_PATH=`/content/${NEXT_PUBLIC_AEM_SITE}/us/en/next-home`
+const PAGE_PATH=`/content/${NEXT_PUBLIC_AEM_SITE}/duy-sandbox/en`
 
 export default function Editable({ model }) {
   return (

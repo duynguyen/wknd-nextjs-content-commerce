@@ -24,6 +24,9 @@ export default function Layout({ children, adventure }) {
         />
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
+        {/* <meta property="cq:pagemodel_router" content="disabled" /> */}
+        <meta property="cq:wcmmode" content="edit" />
+        <meta property="cq:datatype" content="JSON" />
       </Head>
       {!adventure && (
         <div className={styles.backToHome}>

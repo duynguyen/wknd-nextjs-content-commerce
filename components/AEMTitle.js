@@ -7,7 +7,7 @@ const { NEXT_PUBLIC_AEM_SITE } = process.env;
 export const TitleEditConfig = {
     emptyLabel: 'Title',
     isEmpty: TitleV2IsEmptyFn,
-    resourceType: `${NEXT_PUBLIC_AEM_SITE}/components/title`
+    resourceType: `editorxpdevelopment/components/content/title`
 };
 
 export const Title = ({ text }) => {

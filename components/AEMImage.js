@@ -11,7 +11,7 @@ export const ImageEditConfig = {
     isEmpty: function(props) {
         return !props || !props.src || props.src.trim().length < 1;
     },
-    resourceType: `${NEXT_PUBLIC_AEM_SITE}/components/image`
+    resourceType: `editorxpdevelopment/components/content/image`
 };
 
 export default class Image extends Component {
