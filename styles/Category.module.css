@@ -1,0 +1,18 @@
+.productlist {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.productlist_item {
+
+}
+
+.pagination {
+    display: flex;
+    grid-column-gap: 1pc;
+    justify-content: center;
+}
+
+.pagination_item {
+    text-decoration: none;
+}
