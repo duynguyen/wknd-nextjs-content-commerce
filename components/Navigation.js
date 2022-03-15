@@ -1,7 +1,10 @@
 import gqlClient from '../lib/CommerceGraphQLClient';
 import { gql } from '@apollo/client';
+import { useState } from 'react';
+import Link from 'next/link';
 
 const Navigation = props => {
+    const [commerceCategories, setCommerceCategories] = useState(null);
 
     gqlClient.query({
         query: gql`
@@ -15,10 +18,24 @@ const Navigation = props => {
             }
         }
     `, variables: { rootCategory: "Mg==" }
-    })
+    }).then(result => {
+        const { data, loading } = result;
+        if (!loading) {
+            const { categoryList } = data;
+            if (categoryList.length > 0) {
+                setCommerceCategories(categoryList[0].children);
+            }
+        }
+    });
 
+    if (commerceCategories === null) {
+        return <div></div>;
+    }
 
-    return (<h1>Navigation</h1>)
+    return <ul>
+        {commerceCategories.map(c => <li key={c.uid}><Link href={`/catalog/category/${c.url_path}`}>{c.name}</Link></li>)}
+    </ul>;
+
 }
 
 export default Navigation;
