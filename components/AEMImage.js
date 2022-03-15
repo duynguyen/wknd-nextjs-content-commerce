@@ -14,7 +14,7 @@ export const ImageEditConfig = {
     resourceType: `${NEXT_PUBLIC_AEM_SITE}/components/image`
 };
 
-export default class Image extends Component {
+export class Image extends Component {
     get content() {
         return <img
                 className="Image-src"
@@ -36,3 +36,5 @@ export default class Image extends Component {
 }
 
 export const AEMImage = withMappable(Image, ImageEditConfig);
+
+export default AEMImage;
