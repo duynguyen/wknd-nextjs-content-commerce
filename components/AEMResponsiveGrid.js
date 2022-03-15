@@ -1,5 +1,5 @@
-import { ResponsiveGrid, MapTo, withMappable } from '@adobe/aem-react-editable-components';
+import { ResponsiveGrid, withMappable } from '@adobe/aem-react-editable-components';
 
 export default withMappable(ResponsiveGrid, {
-    resourceType: 'wcm/foundation/components/responsivegrid'
+    resourceType: 'wknd/components/container'
 });
