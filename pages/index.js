@@ -1,19 +1,19 @@
 import Head from 'next/head'
 import Navigation from '../components/Navigation'
+import { getNavigationItems } from '../lib/navigation';
+
 
 const { NEXT_PUBLIC_AEM_PATH } = process.env;
 
-export default function ContentPage({ path }) {
+export default function ContentPage({ navigationItems }) {
   const pagePath = `${NEXT_PUBLIC_AEM_PATH}`;
-
-  // TODO: render the editable grid
 
   return (
     <>
       <Head>
         <title>foobar</title>
       </Head>
-      <Navigation />
+      <Navigation commerceItems={navigationItems.commerceNavItems} contentItems={navigationItems.contentNavItems} />
       <article>
         ordinary page:
         {pagePath}
@@ -22,13 +22,14 @@ export default function ContentPage({ path }) {
   );
 }
 
-
 export async function getServerSideProps(context) {
-  // TODO: fetch model of any content page
-
+  const { commerceNavItems, contentNavItems } = await getNavigationItems(NEXT_PUBLIC_AEM_PATH);
   return {
     props: {
-
+      navigationItems: {
+        commerceNavItems,
+        contentNavItems
+      }
     }
   }
 }
