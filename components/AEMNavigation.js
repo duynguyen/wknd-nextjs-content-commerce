@@ -16,13 +16,12 @@ export const NavigationConfig = {
 };
 
 export class Navigation extends Component {
-    getContentItems(rootPath, cqPath) {
-        // TODO: get the corrent path into the global context. AEMEperienceFragments might change it in the model.
-        const pathPrefix = cqPath.startsWith('/content/experience-fragments') ? rootPath.replace('\/us\/', '/language-masters/') : rootPath;
-
+    getContentItems(rootPath) {
         const { items } = this.props;
+        console.log('items', items);
         return items[0]?.children.map(c => ({
-            path: c.path.replace(pathPrefix, ''),
+            // TODO: get the corrent path into the global context. AEMEperienceFragments might change it in the model.
+            path: c.path.includes('language-masters') ? c.path.replace(rootPath.replace('\/us\/', '/language-masters/'), '') : c.path.replace(rootPath, ''),
             id: c.id,
             title: c.title
         }));
@@ -33,14 +32,14 @@ export class Navigation extends Component {
             return null;
         }
 
-        const { appliedCssClassNames, cqPath } = this.props;
+        const { appliedCssClassNames } = this.props;
 
         return (
             <div className='cmp-navigation'>
                 <GlobalConsumer>
                     {(globalContext) => (
                         <ul className='cmp-navigation__group'>
-                            {this.getContentItems(globalContext.rootPath, cqPath).map(c =>
+                            {this.getContentItems(globalContext.rootPath).map(c =>
                                 <li className='cmp-navigation__item cmp-navigation__item--level-1' key={c.id}>
                                     <Link href={`${c.path}`}>
                                         <a className='cmp-navigation__item-link'>{c.title}</a>
