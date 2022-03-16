@@ -7,7 +7,10 @@ import { GlobalProvider } from '../../../lib/globalContext';
 import ResponsiveGrid from '../../../components/AEMResponsiveGrid';
 import CommerceProductDetail from '../../../components/CommerceProductDetail';
 import styles from '../../../styles/Product.module.css';
-import {    getComponentModel,    getPageModelWithFallback} from '../../../lib/pages';
+import {
+    getComponentModel,
+    getPageModelWithFallback
+} from '../../../lib/pages';
 import {
     getNavigationItems,
     NavigationProvider
@@ -15,7 +18,14 @@ import {
 
 const { NEXT_PUBLIC_AEM_PATH, NEXT_PUBLIC_AEM_HOST } = process.env;
 
-export default function ProductPage({ aemHost, rootPath, pagePath, product, commerceItems, pageModel }) {
+export default function ProductPage({
+    aemHost,
+    rootPath,
+    pagePath,
+    product,
+    commerceItems,
+    pageModel
+}) {
     const headerXFModel = Utils.modelToProps(
         getComponentModel(pageModel, 'experiencefragment-header')
     );
@@ -77,7 +87,7 @@ export async function getServerSideProps(context) {
     const slug = context.params.slug;
     const pagePath =
         `${NEXT_PUBLIC_AEM_PATH}/catalog/product/` + slug.join('/');
-    
+
     const getCommerceModel = (slug) => {
         return client.query({
             query: gql`{
