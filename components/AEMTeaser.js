@@ -1,5 +1,6 @@
 import { withMappable } from '@adobe/aem-react-editable-components';
 import React, { Component } from 'react';
+import { GlobalConsumer } from '../lib/globalContext';
 
 import { Image } from './AEMImage';
 
@@ -12,7 +13,7 @@ export const TeaserEditConfig = {
     resourceType,
     emptyLabel: 'Teaser',
 
-    isEmpty: function (props) {
+    isEmpty: function(props) {
         const hasContent = props.imageResource || props.pretitle || props.title || props.description || (props.actions && props.actions.length);
         return !hasContent;
     }
@@ -78,7 +79,7 @@ export class Teaser extends Component {
         }
     }
 
-    get actions() {
+    actions(rootPath) {
         const { actionsEnabled, actions } = this.props;
 
 
@@ -86,7 +87,9 @@ export class Teaser extends Component {
             return (
                 <div className='cmp-teaser__action-container'>
                     {actions.map(({ id, url, title }) => (
-                        <a className='cmp-teaser__action-link' href={url} id={id}>
+                        <a className='cmp-teaser__action-link'
+                            href={url.replace(rootPath, '').replace(/\.html$/, '')}
+                            id={id}>
                             {title}
                         </a>
                     ))}
@@ -105,17 +108,21 @@ export class Teaser extends Component {
         const { id, isInEditor, imagePath, appliedCssClassNames = '' } = this.props;
 
         return (
-            <div className={`teaser ${appliedCssClassNames}`}>
-                <div id={id} className={`cmp-teaser${isInEditor && imagePath ? ' cq-dd-image' : ''}`}>
-                    <div className='cmp-teaser__image'>{this.image}</div>
-                    <div className='cmp-teaser__content'>
-                        {this.pretitle}
-                        {this.title}
-                        {this.description}
-                        {this.actions}
+            <GlobalConsumer>
+                {({ rootPath }) => (
+                    <div className={`teaser ${appliedCssClassNames}`}>
+                        <div id={id} className={`cmp-teaser${isInEditor && imagePath ? ' cq-dd-image' : ''}`}>
+                            <div className='cmp-teaser__image'>{this.image}</div>
+                            <div className='cmp-teaser__content'>
+                                {this.pretitle}
+                                {this.title}
+                                {this.description}
+                                {this.actions(rootPath)}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                )}
+            </GlobalConsumer>
         );
     }
 

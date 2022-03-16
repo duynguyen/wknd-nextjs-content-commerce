@@ -5465,7 +5465,7 @@ p {
 }
 .cmp-layoutcontainer--header {
   background-color: #fff;
-  margin-top: 0;
+  margin: 0 50px;
   padding-bottom: 50px;
   padding-top: 50px;
   -webkit-transition: padding-bottom 0s ease, padding-top 0s;
@@ -5854,6 +5854,16 @@ p {
 }
 .cmp-navigation__item--level-0 > .cmp-navigation__item-link {
   display: none;
+}
+.cmp-navigation__item--level-1 > .cmp-navigation__group {
+  display: none;
+  background-color: #fff;
+}
+.cmp-navigation__item--level-1:hover > .cmp-navigation__group {
+  display: block;
+}
+.cmp-navigation__item.cmp-navigation__item--level-2 {
+  float: none;
 }
 .cmp-navigation--footer .cmp-navigation__item-link {
   color: #ebebeb;

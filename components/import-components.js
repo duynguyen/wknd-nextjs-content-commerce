@@ -7,9 +7,11 @@ import { ExperienceFragment, ExperienceFragmentEditConfig, resourceType as exper
 import { Navigation, NavigationConfig, resourceType as navigationRt } from './AEMNavigation'
 import { Teaser, TeaserEditConfig, resourceType as teaserRt } from './AEMTeaser';
 import { Carousel, CarouselEditConfig, resourceType as carouselRt } from './AEMCarousel'
+import Button, { ButtonEditConfig } from "./AEMButton";
 
 const { NEXT_PUBLIC_AEM_SITE } = process.env;
 
+MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/button`)(Button, ButtonEditConfig);
 MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/title`)(Title, TitleEditConfig)
 MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/text`)(Text, TextEditConfig)
 MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/image`)(Image, ImageEditConfig)

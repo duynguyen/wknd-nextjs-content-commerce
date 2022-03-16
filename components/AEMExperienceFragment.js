@@ -37,7 +37,6 @@ export class ExperienceFragment extends Component {
                         <ResponsiveGrid
                             cqItems={cqItems}
                             cqItemsOrder={cqItemsOrder}
-                            pagePath={path}
                             model={this.model}
                             itemPath='root'/>
                     </div>
