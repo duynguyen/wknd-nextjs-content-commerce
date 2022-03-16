@@ -95,14 +95,13 @@ export async function getServerSideProps(context) {
         });
     }
 
-    const [commereModel, aemModel] = await Promise.all([
+    const [commerceModel, aemModel] = await Promise.all([
         getCommerceModel(slug, page),
         getPageModel(pagePath)
     ]);
 
 
-    const category = commereModel?.data?.categoryList.length > 0 ? commereModel?.data?.categoryList[0] : null;
-
+    const category = commerceModel?.data?.categoryList.length > 0 ? commerceModel?.data?.categoryList[0] : null;
     console.log('Category: ' + category);
 
     return {
