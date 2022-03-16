@@ -1,38 +1,73 @@
 import React, { Component } from 'react';
 import { withMappable } from '@adobe/aem-react-editable-components';
 
-const NEXT_PUBLIC_AEM_HOST = process.env.NEXT_PUBLIC_AEM_HOST;
-const NEXT_PUBLIC_AEM_SITE = process.env.NEXT_PUBLIC_AEM_SITE;
+const { NEXT_PUBLIC_AEM_SITE } = process.env;
 
 export const ImageEditConfig = {
 
     emptyLabel: 'Image',
+    resourceType: `${NEXT_PUBLIC_AEM_SITE}/components/image`,
 
-    isEmpty: function(props) {
+    isEmpty: function (props) {
         return !props || !props.src || props.src.trim().length < 1;
-    },
-    resourceType: `${NEXT_PUBLIC_AEM_SITE}/components/image`
+    }
 };
 
 export class Image extends Component {
-    get content() {
-        return <img
-                className="Image-src"
-                src={NEXT_PUBLIC_AEM_HOST + this.props.src}
-                alt={this.props.alt}
-                title={this.props.title ? this.props.title : this.props.alt} />;
+
+    get imageContent() {
+        const { src, alt, title, displayPopupTitle, link } = this.props;
+        const imageContent = <img
+            src={src}
+            className='cmp-image__image'
+            itemProp='contentUrl'
+            title={displayPopupTitle ? title : undefined}
+            alt={alt || ''}
+        />
+
+        if (link) {
+            return <a href={link} className='cmp-image__link'>{imageContent}</a>
+        } else {
+            return imageContent;
+        }
+    }
+
+    get titleContent() {
+        const { title, displayPopupTitle, link } = this.props;
+
+        if (!displayPopupTitle && title) {
+            return <span className='cmp-image__title' itemProp='caption'>{title}</span>
+        } else if (displayPopupTitle && title) {
+            return <meta itemProp='caption' content={title}></meta>
+        } else {
+            return <></>;
+        }
     }
 
     render() {
-        if(ImageEditConfig.isEmpty(this.props)) {
+        if (ImageEditConfig.isEmpty(this.props)) {
             return null;
         }
-        return (
-            <div className="Image">
-                {this.content}
+
+        const { isInEditor, appliedCssClassNames = '', withoutDecoration } = this.props;
+
+        const content = (
+            <div
+                className={`cmp-image${isInEditor ? ' cq-dd-image' : ''}`}
+                itemScope
+                itemType='http://schema.org/ImageObject'>
+                {this.imageContent}
+                {this.titleContent}
             </div>
         );
+
+        if (withoutDecoration) {
+            return content;
+        } else {
+            return <div className={`image ${appliedCssClassNames}`}>{content}</div>;
+        }
     }
+
 }
 
 export const AEMImage = withMappable(Image, ImageEditConfig);
