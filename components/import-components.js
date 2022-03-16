@@ -5,15 +5,17 @@ import { Image, ImageEditConfig } from './AEMImage'
 import { Container, ContainerEditConfig, resourceType as containerRt } from './AEMContainer'
 import { ExperienceFragment, ExperienceFragmentEditConfig, resourceType as experienceFragmentRt } from './AEMExperienceFragment'
 import { Navigation, NavigationConfig, resourceType as navigationRt } from './AEMNavigation'
-import { Teaser, TeaserEditConfig, resourceType as teaserResourceType } from './AEMTeaser';
+import { Teaser, TeaserEditConfig, resourceType as teaserRt } from './AEMTeaser';
+import { Carousel, CarouselEditConfig, resourceType as carouselRt } from './AEMCarousel'
 
 const { NEXT_PUBLIC_AEM_SITE } = process.env;
 
 MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/title`)(Title, TitleEditConfig)
 MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/text`)(Text, TextEditConfig)
 MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/image`)(Image, ImageEditConfig)
-// MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/carousel`)(ResponsiveGrid)
+MapTo(`${NEXT_PUBLIC_AEM_SITE}/components/carousel`)()
 MapTo(containerRt)(Container, ContainerEditConfig)
 MapTo(experienceFragmentRt)(ExperienceFragment, ExperienceFragmentEditConfig)
 MapTo(navigationRt)(Navigation, NavigationConfig)
-MapTo(teaserResourceType)(Teaser, TeaserEditConfig)
+MapTo(teaserRt)(Teaser, TeaserEditConfig)
+MapTo(carouselRt)(Carousel, CarouselEditConfig)
