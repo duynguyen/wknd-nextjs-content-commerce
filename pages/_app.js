@@ -1,4 +1,4 @@
-import '../styles/global.css'
+import '../styles/theme.css'
 import { ModelManager } from '@adobe/aem-spa-page-model-manager'
 import CustomModelClient from '../lib/CustomModelClient'
 import '../components/import-components'
