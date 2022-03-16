@@ -1,82 +1,50 @@
 import Head from 'next/head'
-import { gql } from "@apollo/client";
+import {gql} from "@apollo/client";
 import client from "../../../lib/CommerceGraphQLClient";
-import utilStyles from "../../../styles/utils.module.css";
 import styles from "../../../components/layout.module.css";
-import categoryStyles from "../../../styles/Category.module.css";
-import usePrice from "../../../lib/use-price";
+import CommerceCategory from "../../../components/CommerceCategory";
+import {Utils} from "@adobe/aem-react-editable-components";
+import {getComponentModel, getPageModel} from "../../../lib/pages";
+import ResponsiveGrid from "../../../components/AEMResponsiveGrid";
 
-const { NEXT_PUBLIC_AEM_PATH } = process.env;
+const {NEXT_PUBLIC_AEM_PATH} = process.env;
 const PAGE_SIZE = 6;
 
-export default function CategoryPage({ pagePath, slug, category }) {
+export default function CategoryPage({pagePath, slug, category, pageModel}) {
 
-    // TODO: render category page
+    const topContentModel = Utils.modelToProps(
+        getComponentModel(pageModel, 'top')
+    );
+    const bottomContentModel = Utils.modelToProps(
+        getComponentModel(pageModel, 'bottom')
+    );
 
     return (
         <div className={styles.container}>
             <Head>
-                <title>{category.name}</title>
+                <title>{category ? category.name : 'Category not Found'}</title>
             </Head>
+
             <div className={styles.content}>
-                <p>AEM Content PlaceHolder</p>
+                <ResponsiveGrid
+                    {...topContentModel}
+                    model={topContentModel}
+                    pagePath={pagePath}
+                    itemPath="top"
+                />
             </div>
-            <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-                <h1 className={utilStyles.headingXl}>{category.name}</h1>
-                {  category.image ?
-                    (<img
-                        height="200px"
-                        alt={category.name}
-                        src={category.image}
-                    />) : ( <span/>)
-                }
-                <ul>
-                    {category.children.map(
-                        ({
-                             name,
-                             url_key,
-                         }) => {
-                            return (
-                                <li><a href={url_key}>{name}</a></li>
-                            );
-                        }
-                    )}
-                </ul>
-                <div className={categoryStyles.productlist}>
-                    {category.products.items.map(
-                        ({
-                            name,
-                            url_key,
-                            small_image,
-                            price
-                         }) => {
-                            const href = '../product/' + url_key;
-                            const formattedPrice = usePrice({
-                                amount: price.regularPrice.amount.value,
-                                currencyCode: price.regularPrice.amount.currency,
-                                locale: 'en-US'
-                            });
-                            return (
-                                <a href={href} className={categoryStyles.productlist_item}>
-                                    <img height="200px" alt={name} src={small_image.url}/>
-                                    <div>{name}</div>
-                                    <span>{formattedPrice}</span>
-                                </a>
-                            );
-                        }
-                    )}
-                </div>
-                <div className={categoryStyles.pagination}>
-                    {
-                        new Array(category.products.page_info.total_pages).fill(1).map( (_, i) => {
-                            const page = i+1;
-                            const href = slug + '?page=' + page;
-                            return (<a className={categoryStyles.pagination_item} href={href}>{page}</a>) })
-                    }
-                </div>
-            </section>
+
+            {category ?
+                (<CommerceCategory slug={slug} category={category}/>) : (<span>Category not found.</span>)
+            }
+
             <div className={styles.content}>
-                <p>AEM Content PlaceHolder</p>
+                <ResponsiveGrid
+                    {...bottomContentModel}
+                    model={bottomContentModel}
+                    pagePath={pagePath}
+                    itemPath="bottom"
+                />
             </div>
         </div>
     );
@@ -84,60 +52,65 @@ export default function CategoryPage({ pagePath, slug, category }) {
 
 
 export async function getServerSideProps(context) {
-    const pagePath = `${NEXT_PUBLIC_AEM_PATH}/catalog/category`;
     const slug = context.params.slug;
     const page = context.query.page ? context.query.page : 1;
-    const filters = slug == 'root' ? '' : `(filters: {url_key: {eq: "${slug}"}})`;
+    const pagePath = `${NEXT_PUBLIC_AEM_PATH}/catalog/category/` + slug;
 
-    const { data } = await client.query({
-        query: gql`{
-          categoryList${filters}{
-            uid
-            url_key
-            url_path
-            name
-            image
-            products (currentPage: ${page}, pageSize: ${PAGE_SIZE}){
-              page_info {
-                total_pages
-              }
-              items {
-                name
-                url_key
-                small_image {
-                    url
-                }
-                price {
-                    regularPrice {
-                        amount {
-                            currency
-                            value
-                        }                    
+    const getCommerceModel = (slug, page) => {
+        const filters = slug == 'root' ? '' : `(filters: {url_key: {eq: "${slug}"}})`;
+        return client.query({
+            query: gql`{
+                categoryList${filters}{
+                    uid
+                    url_key
+                    url_path
+                    name
+                    image
+                    products (currentPage: ${page}, pageSize: ${PAGE_SIZE}){
+                        page_info {
+                            total_pages
+                        }
+                        items {
+                            name
+                            url_key
+                            small_image {
+                                url
+                            }
+                            price {
+                                regularPrice {
+                                    amount {
+                                        currency
+                                        value
+                                    }                    
+                                }
+                            }    
+                        }
                     }
-                }    
-              }
-            }
-            children {
-                name
-                url_key
-            }
-          }
-        }`
-    });
-    const category = data?.categoryList[0];
+                    children {
+                        name
+                        url_key
+                    }
+                }
+            }`
+        });
+    }
 
-    console.log(category);
-//  TODO: fetch from AEM and Commerce
-//    const [adobeCommerce, aem] = await Promise.all([
-//        fetch(/*adobe commerce*/),
-//        fetch(/*aem*/)
-//    ])
+    const [commereModel, aemModel] = await Promise.all([
+        getCommerceModel(slug, page),
+        getPageModel(pagePath)
+    ]);
+
+
+    const category = commereModel?.data?.categoryList.length > 0 ? commereModel?.data?.categoryList[0] : null;
+
+    console.log('Category: ' + category);
 
     return {
         props: {
             pagePath,
             category: category,
-            slug: slug.join('/'),
+            slug: slug,
+            pageModel: aemModel
         }
-    }
+    };
 }
