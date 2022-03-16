@@ -20,8 +20,7 @@ export class Navigation extends Component {
         const { items } = this.props;
         console.log('items', items);
         return items[0]?.children.map(c => ({
-            // TODO: get the corrent path into the global context. AEMEperienceFragments might change it in the model.
-            path: c.path.includes('language-masters') ? c.path.replace(rootPath.replace('\/us\/', '/language-masters/'), '') : c.path.replace(rootPath, ''),
+            path: c.path.replace(rootPath, ''),
             id: c.id,
             title: c.title
         }));
@@ -46,17 +45,25 @@ export class Navigation extends Component {
                                     </Link>
                                 </li>
                             )}
-                            {appliedCssClassNames === 'cmp-navigation--footer' &&
-                                <NavigationConsumer>
-                                    {(categories) => categories.map(c =>
-                                        <li className='cmp-navigation__item cmp-navigation__item--level-1' key={c.uid}>
-                                            <Link href={`/catalog/category/${c.url_path}`}>
-                                                <a className='cmp-navigation__item-link'>{c.name}</a>
-                                            </Link>
-                                        </li>
-                                    )}
-                                </NavigationConsumer>
-                            }
+                            <li className='cmp-navigation__item cmp-navigation__item--level-1'>
+                                <Link href='/catalog'>
+                                    <a className='cmp-navigation__item-link'>Catalog</a>
+                                </Link>
+                                {appliedCssClassNames !== 'cmp-navigation--footer' &&
+                                    <ul className='cmp-navigation__group'>
+                                        <NavigationConsumer>
+                                            {(categories) => categories.map(c =>
+                                                <li className='cmp-navigation__item cmp-navigation__item--level-2' key={c.uid}>
+                                                    <Link href={`/catalog/category/${c.url_path}`}>
+                                                        <a className='cmp-navigation__item-link'>{c.name}</a>
+                                                    </Link>
+                                                </li>
+                                            )}
+                                        </NavigationConsumer>
+                                    </ul>
+                                }
+                            </li>
+
                         </ul>
                     )}
                 </GlobalConsumer>
