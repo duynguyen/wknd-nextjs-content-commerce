@@ -20,7 +20,7 @@ export const TeaserEditConfig = {
 
 export class Teaser extends Component {
 
-    get teaserImage() {
+    get image() {
         const { imageLinkHidden, linkURL, imagePath } = this.props;
 
         if (!imagePath) {
@@ -34,6 +34,68 @@ export class Teaser extends Component {
         return <Image {...imageProps} withoutDecoration={true}></Image>
     }
 
+    get pretitle() {
+        const { pretitle } = this.props;
+
+        if (pretitle) {
+            return <div className='cmp-teaser__pretitle'>{pretitle}</div>
+        } else {
+            return <></>
+        }
+    }
+
+    get title() {
+        const { title, titleType, linkURL, titleLinkHidden } = this.props;
+
+        if (!title) {
+            return <></>;
+        }
+
+        const titleContent = linkURL && !titleLinkHidden
+            ? <a href={linkURL} className='cmp-teaser__title-link'>{title}</a>
+            : title;
+        const className = 'cmp-teaser__title';
+
+        switch (titleType) {
+            case 'h1': return <h1 className={className}>{titleContent}</h1>;
+            case 'h3': return <h3 className={className}>{titleContent}</h3>;
+            case 'h4': return <h4 className={className}>{titleContent}</h4>;
+            case 'h5': return <h5 className={className}>{titleContent}</h5>;
+            case 'h6': return <h6 className={className}>{titleContent}</h6>;
+            case 'h2':
+            default:
+                return <h2 className={className}>{titleContent}</h2>;
+        }
+    }
+
+    get description() {
+        const { description } = this.props;
+
+        if (description) {
+            return <div className='cmp-teaser__description' dangerouslySetInnerHTML={{ __html: description }}></div>
+        } else {
+            return <></>
+        }
+    }
+
+    get actions() {
+        const { actionsEnabled, actions } = this.props;
+
+
+        if (actionsEnabled) {
+            return (
+                <div className='cmp-teaser__action-container'>
+                    {actions.map(({ id, url, title }) => (
+                        <a className='cmp-teaser__action-link' href={url} id={id}>
+                            {title}
+                        </a>
+                    ))}
+                </div>
+            );
+        } else {
+            return <></>;
+        }
+    }
 
     render() {
         if (TeaserEditConfig.isEmpty(this.props)) {
@@ -45,8 +107,12 @@ export class Teaser extends Component {
         return (
             <div className={`teaser ${appliedCssClassNames}`}>
                 <div id={id} className={`cmp-teaser${isInEditor && imagePath ? ' cq-dd-image' : ''}`}>
-                    <div className='cmp-teaser__image'>{this.teaserImage}</div>
-                    <div className='cmp-teaser__content'>   
+                    <div className='cmp-teaser__image'>{this.image}</div>
+                    <div className='cmp-teaser__content'>
+                        {this.pretitle}
+                        {this.title}
+                        {this.description}
+                        {this.actions}
                     </div>
                 </div>
             </div>

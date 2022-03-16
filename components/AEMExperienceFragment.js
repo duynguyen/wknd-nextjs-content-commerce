@@ -31,7 +31,7 @@ export class ExperienceFragment extends Component {
             : localizedFragmentVariationPath;
         
         return (
-            <EditorContext.Provider isInEditor={false}>
+            <EditorContext.Provider value={false}>
                 <div className={`experiencefragment cmp-experiencefragment ${this.props.appliedCssClassNames}`}>
                     <div className='xf-content-height'>
                         <ResponsiveGrid
