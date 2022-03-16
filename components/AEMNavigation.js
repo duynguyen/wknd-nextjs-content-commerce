@@ -51,7 +51,7 @@ export class Navigation extends Component {
                                 <NavigationConsumer>
                                     {(categories) => categories.map(c =>
                                         <li className='cmp-navigation__item cmp-navigation__item--level-1' key={c.uid}>
-                                            <Link href={`/catalog/category/${c.url_path}`}>
+                                            <Link href={`/catalog/${c.url_path}`}>
                                                 <a className='cmp-navigation__item-link'>{c.name}</a>
                                             </Link>
                                         </li>

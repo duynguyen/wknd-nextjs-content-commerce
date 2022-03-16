@@ -3,59 +3,79 @@ import { gql } from '@apollo/client';
 import { Utils } from '@adobe/aem-react-editable-components';
 
 import client from '../../../lib/CommerceGraphQLClient';
+import { GlobalProvider } from '../../../lib/globalContext';
 import ResponsiveGrid from '../../../components/AEMResponsiveGrid';
 import CommerceProductDetail from '../../../components/CommerceProductDetail';
 import styles from '../../../styles/Product.module.css';
 import { getComponentModel, getPageModel } from '../../../lib/pages';
+import { getNavigationItems, NavigationProvider } from '../../../lib/navigation';
 
 const { NEXT_PUBLIC_AEM_PATH } = process.env;
 
-export default function ProductPage({ pagePath, product, pageModel }) {
-
+export default function ProductPage({ pagePath, product, commerceItems, pageModel }) {
+    const headerXFModel = Utils.modelToProps(
+        getComponentModel(pageModel, 'experiencefragment-header')
+    );
     const topContentModel = Utils.modelToProps(
         getComponentModel(pageModel, 'top')
     );
     const bottomContentModel = Utils.modelToProps(
         getComponentModel(pageModel, 'bottom')
     );
+    const footerXFModel = Utils.modelToProps(
+        getComponentModel(pageModel, 'experiencefragment-header')
+    );
 
     return (
-        <>
-            <Head>
-                <title>{product.name}</title>
-            </Head>
-            <main className={styles.main}>
-                <div className={styles.content}>
+        <GlobalProvider value={{ aemPath: NEXT_PUBLIC_AEM_PATH }}>
+            <NavigationProvider value={commerceItems}>
+                <Head>
+                    <title>{product.name}</title>
+                </Head>
+                {
                     <ResponsiveGrid
-                        {...topContentModel}
-                        model={topContentModel}
+                        {...headerXFModel}
+                        model={headerXFModel}
                         pagePath={pagePath}
-                        itemPath="top"
+                        itemPath="experiencefragment-header"
                     />
-                </div>
-                <CommerceProductDetail product={product} />
-                <div className={styles.content}>
-                    <ResponsiveGrid
-                        {...bottomContentModel}
-                        model={bottomContentModel}
-                        pagePath={pagePath}
-                        itemPath="bottom"
-                    />
-                </div>
-            </main>
-        </>
+                }
+                <main className={styles.main}>
+                    <div className={styles.content}>
+                        <ResponsiveGrid
+                            {...topContentModel}
+                            model={topContentModel}
+                            pagePath={pagePath}
+                            itemPath="top"
+                        />
+                    </div>
+                    <CommerceProductDetail product={product} />
+                    <div className={styles.content}>
+                        <ResponsiveGrid
+                            {...bottomContentModel}
+                            model={bottomContentModel}
+                            pagePath={pagePath}
+                            itemPath="bottom"
+                        />
+                    </div>
+                </main>
+                <ResponsiveGrid
+                    {...footerXFModel}
+                    model={footerXFModel}
+                    pagePath={pagePath}
+                    itemPath="experiencefragment-footer"
+                />
+            </NavigationProvider>
+        </GlobalProvider>
     );
 }
 
 export async function getServerSideProps(context) {
-    console.log(context);
     const slug = context.params.slug;
+    const pagePath =
+        `${NEXT_PUBLIC_AEM_PATH}/catalog/product/` + slug.join('/');
 
-
-
-    const pagePath = `${NEXT_PUBLIC_AEM_PATH}/catalog/product/` + slug.join('/');
-
-    const [adobeCommerce, aemModel] = await Promise.all([
+    const [adobeCommerce, aemModel, commerceItems] = await Promise.all([
         client.query({
             query: gql`{
             products(filter: {url_key: {eq: "${slug}"}}) {
@@ -81,15 +101,20 @@ export async function getServerSideProps(context) {
             }
         }`
         }),
-        getPageModel(pagePath)
+        getPageModel(pagePath),
+        getNavigationItems()
     ]);
     const product = adobeCommerce?.data?.products?.items[0];
+
+
+    console.log(aemModel);
 
     return {
         props: {
             pagePath,
             product,
-            pageModel: aemModel
+            pageModel: aemModel,
+            commerceItems
         }
     };
 }

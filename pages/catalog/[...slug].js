@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import {gql} from "@apollo/client";
-import client from "../../../lib/CommerceGraphQLClient";
-import styles from "../../../components/layout.module.css";
-import CommerceCategory from "../../../components/CommerceCategory";
+import client from "../../lib/CommerceGraphQLClient";
+import styles from "../../components/layout.module.css";
+import CommerceCategory from "../../components/CommerceCategory";
 import {Utils} from "@adobe/aem-react-editable-components";
-import {getComponentModel, getPageModel} from "../../../lib/pages";
-import ResponsiveGrid from "../../../components/AEMResponsiveGrid";
+import {getComponentModel, getPageModel} from "../../lib/pages";
+import ResponsiveGrid from "../../components/AEMResponsiveGrid";
 
 const {NEXT_PUBLIC_AEM_PATH} = process.env;
 const PAGE_SIZE = 6;
