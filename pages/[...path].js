@@ -6,13 +6,13 @@ import { getNavigationItems, NavigationProvider } from '../lib/navigation';
 
 import ResponsiveGrid from '../components/AEMResponsiveGrid'
 
-const { NEXT_PUBLIC_AEM_PATH } = process.env;
+const { NEXT_PUBLIC_AEM_PATH, NEXT_PUBLIC_AEM_HOST } = process.env;
 
-export default function ContentPage({ pagePath, pageModel, commerceItems }) {
+export default function ContentPage({ aemHost, rootPath, pagePath, pageModel, commerceItems }) {
   const rootModel = Utils.modelToProps(getComponentModel(pageModel, 'root'));
 
   return (
-    <GlobalProvider value={{ aemPath: NEXT_PUBLIC_AEM_PATH }}>
+    <GlobalProvider value={{ aemHost, rootPath }}>
       <NavigationProvider value={commerceItems}>
         <Head>
           <title>{pageModel.title}</title>
@@ -39,6 +39,8 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
+      aemHost: NEXT_PUBLIC_AEM_HOST,
+      rootPath: NEXT_PUBLIC_AEM_PATH,
       commerceItems,
       pagePath,
       pageModel

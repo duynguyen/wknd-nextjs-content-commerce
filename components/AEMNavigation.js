@@ -10,15 +10,15 @@ export const resourceType = `${NEXT_PUBLIC_AEM_SITE}/components/navigation`;
 export const NavigationConfig = {
     resourceType,
     emptyLabel: 'Navigation',
-    isEmpty: function (props) {
+    isEmpty: function(props) {
         return !props || !props.items || props.items.length === 0;
     }
 };
 
 export class Navigation extends Component {
-    getContentItems(aemPath, cqPath) {
+    getContentItems(rootPath, cqPath) {
         // TODO: get the corrent path into the global context. AEMEperienceFragments might change it in the model.
-        const pathPrefix = cqPath.startsWith('/content/experience-fragments') ? aemPath.replace('\/us\/', '/language-masters/') : aemPath;
+        const pathPrefix = cqPath.startsWith('/content/experience-fragments') ? rootPath.replace('\/us\/', '/language-masters/') : rootPath;
 
         const { items } = this.props;
         return items[0]?.children.map(c => ({
@@ -40,7 +40,7 @@ export class Navigation extends Component {
                 <GlobalConsumer>
                     {(globalContext) => (
                         <ul className='cmp-navigation__group'>
-                            {this.getContentItems(globalContext.aemPath, cqPath).map(c =>
+                            {this.getContentItems(globalContext.rootPath, cqPath).map(c =>
                                 <li className='cmp-navigation__item cmp-navigation__item--level-1' key={c.id}>
                                     <Link href={`${c.path}`}>
                                         <a className='cmp-navigation__item-link'>{c.title}</a>

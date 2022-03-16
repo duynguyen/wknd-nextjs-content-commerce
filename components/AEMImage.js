@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withMappable } from '@adobe/aem-react-editable-components';
+import { GlobalConsumer } from '../lib/globalContext';
 
 const { NEXT_PUBLIC_AEM_SITE } = process.env;
 
@@ -8,17 +9,18 @@ export const ImageEditConfig = {
     emptyLabel: 'Image',
     resourceType: `${NEXT_PUBLIC_AEM_SITE}/components/image`,
 
-    isEmpty: function (props) {
+    isEmpty: function(props) {
         return !props || !props.src || props.src.trim().length < 1;
     }
 };
 
 export class Image extends Component {
 
-    get imageContent() {
+    imageContent(aemHost, rootPath) {
         const { src, alt, title, displayPopupTitle, link } = this.props;
+        const imgUrl = src[0] === '/' ? aemHost + src : src;
         const imageContent = <img
-            src={src}
+            src={imgUrl}
             className='cmp-image__image'
             itemProp='contentUrl'
             title={displayPopupTitle ? title : undefined}
@@ -26,14 +28,18 @@ export class Image extends Component {
         />
 
         if (link) {
-            return <a href={link} className='cmp-image__link'>{imageContent}</a>
+            return <a
+                href={link.replace(rootPath, '').replace(/\.html$/, '')}
+                className='cmp-image__link'>
+                {imageContent}
+            </a>
         } else {
             return imageContent;
         }
     }
 
     get titleContent() {
-        const { title, displayPopupTitle, link } = this.props;
+        const { title, displayPopupTitle } = this.props;
 
         if (!displayPopupTitle && title) {
             return <span className='cmp-image__title' itemProp='caption'>{title}</span>
@@ -52,13 +58,17 @@ export class Image extends Component {
         const { isInEditor, appliedCssClassNames = '', withoutDecoration } = this.props;
 
         const content = (
-            <div
-                className={`cmp-image${isInEditor ? ' cq-dd-image' : ''}`}
-                itemScope
-                itemType='http://schema.org/ImageObject'>
-                {this.imageContent}
-                {this.titleContent}
-            </div>
+            <GlobalConsumer>
+                {({ aemHost, rootPath }) => (
+                    <div
+                        className={`cmp-image${isInEditor ? ' cq-dd-image' : ''}`}
+                        itemScope
+                        itemType='http://schema.org/ImageObject'>
+                        {this.imageContent(aemHost, rootPath)}
+                        {this.titleContent}
+                    </div>
+                )}
+            </GlobalConsumer>
         );
 
         if (withoutDecoration) {
