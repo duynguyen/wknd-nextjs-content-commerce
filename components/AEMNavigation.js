@@ -33,8 +33,6 @@ export class Navigation extends Component {
             return null;
         }
 
-        console.log('navigation', this.props);
-
         const { appliedCssClassNames, cqPath } = this.props;
 
         return (
