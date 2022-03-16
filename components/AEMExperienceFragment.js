@@ -1,6 +1,6 @@
 import { EditorContext, withMappable } from '@adobe/aem-react-editable-components';
 import React, { Component } from 'react';
-import ResponsiveGrid from './AEMResponsiveGrid';
+import { Container } from './AEMContainer';
 
 const { NEXT_PUBLIC_AEM_SITE } = process.env;
 
@@ -34,7 +34,7 @@ export class ExperienceFragment extends Component {
             <EditorContext.Provider value={false}>
                 <div className={`experiencefragment cmp-experiencefragment ${this.props.appliedCssClassNames}`}>
                     <div className='xf-content-height'>
-                        <ResponsiveGrid
+                        <Container
                             cqItems={cqItems}
                             cqItemsOrder={cqItemsOrder}
                             model={this.model}
