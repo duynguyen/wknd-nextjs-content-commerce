@@ -10,9 +10,9 @@ import styles from '../../../styles/Product.module.css';
 import { getComponentModel, getPageModel } from '../../../lib/pages';
 import { getNavigationItems, NavigationProvider } from '../../../lib/navigation';
 
-const { NEXT_PUBLIC_AEM_PATH } = process.env;
+const { NEXT_PUBLIC_AEM_PATH, NEXT_PUBLIC_AEM_HOST } = process.env;
 
-export default function ProductPage({ pagePath, product, commerceItems, pageModel }) {
+export default function ProductPage({ aemHost, rootPath, pagePath, product, commerceItems, pageModel }) {
     const headerXFModel = Utils.modelToProps(
         getComponentModel(pageModel, 'experiencefragment-header')
     );
@@ -27,7 +27,7 @@ export default function ProductPage({ pagePath, product, commerceItems, pageMode
     );
 
     return (
-        <GlobalProvider value={{ aemPath: NEXT_PUBLIC_AEM_PATH }}>
+        <GlobalProvider value={{ aemHost, rootPath }}>
             <NavigationProvider value={commerceItems}>
                 <Head>
                     <title>{product.name}</title>
@@ -80,8 +80,8 @@ export async function getServerSideProps(context) {
             query: gql`{
             products(filter: {url_key: {eq: "${slug}"}}) {
                 items {
-                    name 
-                    sku   
+                    name
+                    sku
                     description {
                         html
                     }
@@ -111,6 +111,8 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
+            aemHost: NEXT_PUBLIC_AEM_HOST,
+            rootPath: NEXT_PUBLIC_AEM_PATH,
             pagePath,
             product,
             pageModel: aemModel,
