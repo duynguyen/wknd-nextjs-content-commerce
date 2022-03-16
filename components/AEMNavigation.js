@@ -18,7 +18,7 @@ export const NavigationConfig = {
 export class Navigation extends Component {
     getContentItems(rootPath) {
         const { items } = this.props;
-        console.log('items', items);
+        //console.log('items', items);
         return items[0]?.children.map(c => ({
             path: c.path.replace(rootPath, ''),
             id: c.id,
