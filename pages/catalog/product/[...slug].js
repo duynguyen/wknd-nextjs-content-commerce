@@ -26,8 +26,6 @@ export default function ProductPage({
     commerceItems,
     pageModel
 }) {
-    console.log('hier');
-
     // use fixed paths for demo here
     const headerXFModel = Utils.modelToProps(
         getComponentModel(pageModel, 'root/experiencefragment')

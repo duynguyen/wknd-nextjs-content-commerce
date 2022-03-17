@@ -10,8 +10,8 @@ export default function CatalogPage({ pagePath, category, pageModel }) {
     );
 }
 
-export async function getServerSideProps(context) {
-    const page = context.query.page ? context.query.page : 1;
+export async function getStaticProps(context) {
+    const page = context.query && context.query.page ? context.query.page : 1;
     const pagePath = `${NEXT_PUBLIC_AEM_PATH}/catalog`;
 
     const [categoryModel, aemModel] = await Promise.all([
