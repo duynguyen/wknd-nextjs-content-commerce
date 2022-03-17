@@ -45,7 +45,7 @@ export async function getServerSideProps(context) {
   const featuredCategories = await getFeaturedCategories(categoriesList);
 
   const productTeaserModels = getComponentsFromModel(pageModel,'wknd/components/productteaser')
-  const productsList = productTeaserModels.map(model=>model.sku)
+  const productsList = productTeaserModels.map(model=>model.sku).filter(item=>item);
   const productTeasersData = await getProductTeasersData(productsList);
 
   return {

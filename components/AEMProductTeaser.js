@@ -70,8 +70,13 @@ const ProductTeaser = (props) => {
 
   const content = (
     <ProductTeaserConsumer>
-      {({ productTeasersData: { items } }) => {
+      {({ productTeasersData }) => {
         const { sku } = props;
+
+        if(!productTeasersData){
+          return <PlaceHolder sku={sku} />;
+        }
+        const { items } = productTeasersData;
 
         const productData = items.find((item) => item.sku === sku);
 
