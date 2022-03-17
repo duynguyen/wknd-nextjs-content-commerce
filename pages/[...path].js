@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Utils } from '@adobe/aem-react-editable-components';
 import { GlobalProvider } from '../lib/globalContext';
-import { getComponentModel, getComponentsFromModel, getPageModel } from '../lib/pages';
+import { getComponentModel, getComponentsFromModel, getPageModel, getChildrenPaths } from '../lib/pages';
 import { getNavigationItems, NavigationProvider } from '../lib/navigation';
 import {FeaturedCategoriesProvider, getFeaturedCategories} from '../lib/featuredCategories';
 
@@ -33,7 +33,17 @@ export default function ContentPage({ aemHost, rootPath, pagePath, pageModel, co
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths() {
+  let staticPaths = []
+  await getChildrenPaths('/content/wknd/us/en', staticPaths)
+  console.log(staticPaths)
+  return {
+    paths: staticPaths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps(context) {
   const path = context.params.path.join('/');
   const pagePath = path ? `${NEXT_PUBLIC_AEM_PATH}/${path}` : NEXT_PUBLIC_AEM_PATH;
   const pageModel = await getPageModel(pagePath);

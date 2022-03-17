@@ -1,9 +1,9 @@
-import ContentPage, { getServerSideProps as getContentPageServerSideProps } from './[...path]';
+import ContentPage, { getStaticProps as getContentPageStaticProps } from './[...path]';
 
 export default ContentPage;
 
-export async function getServerSideProps(context) {
-  return await getContentPageServerSideProps({
+export async function getStaticProps(context) {
+  return await getContentPageStaticProps({
       ...context,
       params: {
         ...context.params,
