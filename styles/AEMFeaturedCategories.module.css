@@ -1,0 +1,29 @@
+.root {
+  display: grid;
+  grid-gap: 20px;
+  padding-top: 20px;
+  grid-template-columns: 
+  repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.card {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  min-width: 300px;
+  min-height: 400px;
+}
+
+.image {
+  width: 300px;
+  height: 400px;
+}
+
+.placeHolder {
+  composes: card;
+  border: dashed gray 1px;
+}
+
+.placeHolderText {
+  font-weight: 600;
+}
