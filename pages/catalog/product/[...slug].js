@@ -26,6 +26,8 @@ export default function ProductPage({
     commerceItems,
     pageModel
 }) {
+    console.log('hier');
+
     // use fixed paths for demo here
     const headerXFModel = Utils.modelToProps(
         getComponentModel(pageModel, 'root/experiencefragment')
@@ -82,7 +84,47 @@ export default function ProductPage({
     );
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticPaths(context) {
+    const paths = [];
+    const query = gql`
+        query FetchUrlKeys($currentPage: Int!) {
+            products(search: "", currentPage: $currentPage) {
+                page_info {
+                    total_pages
+                }
+                items {
+                    url_key
+                }
+            }
+        }
+    `;
+    const executeQuery = async (currentPage = 1) => {
+        const response = await client.query({ query, variables: { currentPage } });
+        const next = currentPage < response.data.products.page_info.total_pages 
+            ? async () => await executeQuery(currentPage + 1)
+            : null;
+
+        return [
+            response.data.products.items || [],
+            next
+        ]
+    }
+
+    for (let executor = executeQuery, items; executor != null;) {
+        [items, executor] = await executor();
+        
+        for (let item of items) {
+            paths.push({ params: { slug: [ item.url_key ] } });
+        }
+    }
+
+    return {
+        paths,
+        fallback: 'blocking'
+    }
+}
+
+export async function getStaticProps(context) {
     const slug = context.params.slug;
     let pagePath =
         `${NEXT_PUBLIC_AEM_PATH}/catalog/product/` + slug.join('/');
