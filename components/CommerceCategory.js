@@ -2,7 +2,7 @@ import utilStyles from '../styles/utils.module.css';
 import categoryStyles from '../styles/Category.module.css';
 import usePrice from '../lib/use-price';
 
-export default function CommerceCategory({ slug, category }) {
+export default function CommerceCategory({ category, slug }) {
     return (
         <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
             <h1 className={utilStyles.headingXl}>{category.name}</h1>
@@ -13,9 +13,10 @@ export default function CommerceCategory({ slug, category }) {
             )}
             <ul>
                 {category.children.map(({ name, url_key }) => {
+                    const href = slug ? url_key : 'catalog/' + url_key;
                     return (
                         <li>
-                            <a href={'catalog/' + url_key}>{name}</a>
+                            <a href={ href }>{name}</a>
                         </li>
                     );
                 })}
@@ -51,7 +52,7 @@ export default function CommerceCategory({ slug, category }) {
                     .fill(1)
                     .map((_, i) => {
                         const page = i + 1;
-                        const href = slug + '?page=' + page;
+                        const href = (slug ? slug : 'catalog') + '?page=' + page;
                         return (
                             <a
                                 className={categoryStyles.pagination_item}
