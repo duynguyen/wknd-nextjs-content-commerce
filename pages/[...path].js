@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { Utils } from '@adobe/aem-react-editable-components';
-import { GlobalProvider } from '../lib/globalContext';
 import { getComponentModel, getComponentsFromModel, getPageModel } from '../lib/pages';
 import { getNavigationItems, NavigationProvider } from '../lib/navigation';
 import {FeaturedCategoriesProvider, getFeaturedCategories} from '../lib/featuredCategories';
@@ -8,13 +7,10 @@ import {FeaturedCategoriesProvider, getFeaturedCategories} from '../lib/featured
 import ResponsiveGrid from '../components/AEMResponsiveGrid'
 import { getProductTeasersData, ProductTeaserProvider } from '../lib/productTeaser';
 
-const { NEXT_PUBLIC_AEM_PATH, NEXT_PUBLIC_AEM_HOST } = process.env;
-
-export default function ContentPage({ aemHost, rootPath, pagePath, pageModel, commerceItems, featuredCategories, productTeasersData }) {
+export default function ContentPage({ pagePath, pageModel, commerceItems, featuredCategories, productTeasersData }) {
   const rootModel = Utils.modelToProps(getComponentModel(pageModel, 'root'));
 
   return (
-    <GlobalProvider value={{ aemHost, rootPath }}>
       <NavigationProvider value={commerceItems}>
         <Head>
           <title>{pageModel.title}</title>
@@ -32,13 +28,13 @@ export default function ContentPage({ aemHost, rootPath, pagePath, pageModel, co
           </FeaturedCategoriesProvider>
         </div>
       </NavigationProvider>
-    </GlobalProvider>
   );
 }
 
 export async function getServerSideProps(context) {
+  const rootPath = process.env.NEXT_PUBLIC_AEM_PATH
   const path = context.params.path.join('/');
-  const pagePath = path ? `${NEXT_PUBLIC_AEM_PATH}/${path}` : NEXT_PUBLIC_AEM_PATH;
+  const pagePath = path ? `${rootPath}/${path}` : rootPath;
   const pageModel = await getPageModel(pagePath);
 
   const commerceItems = await getNavigationItems();
@@ -54,8 +50,6 @@ export async function getServerSideProps(context) {
 
   return {
     props: {
-      aemHost: NEXT_PUBLIC_AEM_HOST,
-      rootPath: NEXT_PUBLIC_AEM_PATH,
       commerceItems,
       pagePath,
       pageModel,
