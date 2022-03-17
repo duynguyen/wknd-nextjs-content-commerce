@@ -9,7 +9,7 @@
 }
 
 .content {
-    background-color: lightgrey;
+    background-color: rgb(242, 242, 242);
     min-width: 50vh;
     text-align: center;
 }

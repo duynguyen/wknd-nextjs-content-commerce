@@ -26,8 +26,9 @@ export default function ProductPage({
     commerceItems,
     pageModel
 }) {
+    // use fixed paths for demo here
     const headerXFModel = Utils.modelToProps(
-        getComponentModel(pageModel, 'experiencefragment-header')
+        getComponentModel(pageModel, 'root/experiencefragment')
     );
     const topContentModel = Utils.modelToProps(
         getComponentModel(pageModel, 'top')
@@ -36,7 +37,7 @@ export default function ProductPage({
         getComponentModel(pageModel, 'bottom')
     );
     const footerXFModel = Utils.modelToProps(
-        getComponentModel(pageModel, 'experiencefragment-header')
+        getComponentModel(pageModel, 'root/experiencefragment_1327121818')
     );
 
     return (
@@ -45,14 +46,12 @@ export default function ProductPage({
                 <Head>
                     <title>{product.name}</title>
                 </Head>
-                {
-                    <ResponsiveGrid
-                        {...headerXFModel}
-                        model={headerXFModel}
-                        pagePath={pagePath}
-                        itemPath="experiencefragment-header"
-                    />
-                }
+                <ResponsiveGrid
+                    {...headerXFModel}
+                    model={headerXFModel}
+                    pagePath={pagePath}
+                    itemPath="root/experiencefragment"
+                />
                 <main className={styles.main}>
                     <div className={styles.content}>
                         <ResponsiveGrid
@@ -76,7 +75,7 @@ export default function ProductPage({
                     {...footerXFModel}
                     model={footerXFModel}
                     pagePath={pagePath}
-                    itemPath="experiencefragment-footer"
+                    itemPath="root/experiencefragment_1327121818"
                 />
             </NavigationProvider>
         </GlobalProvider>
@@ -85,7 +84,7 @@ export default function ProductPage({
 
 export async function getServerSideProps(context) {
     const slug = context.params.slug;
-    const pagePath =
+    let pagePath =
         `${NEXT_PUBLIC_AEM_PATH}/catalog/product/` + slug.join('/');
 
     const getCommerceModel = (slug) => {
@@ -118,7 +117,7 @@ export async function getServerSideProps(context) {
 
     const [adobeCommerce, aemModel, commerceItems] = await Promise.all([
         getCommerceModel(slug),
-        getPageModelWithFallback(pagePath, `${NEXT_PUBLIC_AEM_PATH}/catalog`),
+        getPageModelWithFallback(pagePath, NEXT_PUBLIC_AEM_PATH),
         getNavigationItems()
     ]);
     const product = adobeCommerce?.data?.products?.items[0];
