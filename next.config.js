@@ -11,14 +11,7 @@ module.exports = {
                 source: '/api/getNextProps',
                 headers: [ {
                     key: 'Access-Control-Allow-Origin',
-                    value: process.env.NEXT_PUBLIC_AEM_HOST
-                } ]
-            },
-            {
-                source: '/asset-manifest.json',
-                headers: [ {
-                    key: 'Access-Control-Allow-Origin',
-                    value: process.env.NEXT_PUBLIC_AEM_HOST
+                    value: '*'
                 } ]
             }
         ]
