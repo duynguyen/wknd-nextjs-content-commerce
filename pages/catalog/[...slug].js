@@ -1,20 +1,24 @@
-import {getPageModelWithFallback} from "../../lib/pages";
-import CommerceCategoryPage, {getCategoryModel} from "../../components/CommerceCategoryPage";
+import { getPageModelWithFallback } from "../../lib/pages";
+import CommerceCategoryPage, { getCategoryModel } from "../../components/CommerceCategoryPage";
 import React from "react";
-import {getNavigationItems} from "../../lib/navigation";
+import { getNavigationItems } from "../../lib/navigation";
+import MiniCart from "../../components/MiniCart";
 
-const {NEXT_PUBLIC_AEM_PATH} = process.env;
+const { NEXT_PUBLIC_AEM_PATH } = process.env;
 
-export default function CatalogCategoryPage({pagePath, slug, category, pageModel, navigationModel, page}) {
+export default function CatalogCategoryPage({ pagePath, slug, category, pageModel, navigationModel, page }) {
     return (
-        <CommerceCategoryPage
-            slug={slug}
-            pageModel={pageModel}
-            pagePath={pagePath}
-            category={category}
-            navigationModel={navigationModel}
-            currentPage={page}
-        />
+        <>
+            <MiniCart />
+            <CommerceCategoryPage
+                slug={slug}
+                pageModel={pageModel}
+                pagePath={pagePath}
+                category={category}
+                navigationModel={navigationModel}
+                currentPage={page}
+            />
+        </>
     );
 }
 

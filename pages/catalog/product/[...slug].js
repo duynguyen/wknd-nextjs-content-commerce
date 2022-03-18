@@ -5,6 +5,7 @@ import { Utils } from '@adobe/aem-react-editable-components';
 import client from '../../../lib/CommerceGraphQLClient';
 import ResponsiveGrid from '../../../components/AEMResponsiveGrid';
 import CommerceProductDetail from '../../../components/CommerceProductDetail';
+import MiniCart from '../../../components/MiniCart';
 import styles from '../../../styles/Product.module.css';
 import {
     getComponentModel,
@@ -40,6 +41,7 @@ export default function ProductPage({
             <Head>
                 <title>{product.name}</title>
             </Head>
+            <MiniCart />
             <ResponsiveGrid
                 {...headerXFModel}
                 model={headerXFModel}
