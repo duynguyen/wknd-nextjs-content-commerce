@@ -99,16 +99,16 @@ export default function CommerceProductDetail({ product }) {
                         </ul>
                     </div>
                 )}
-                <p>Quantity <select classname='product-quantity' onChange={updateQuantity} value={selection.quantity}>
+                <p>Quantity <select className='product-quantity' onChange={updateQuantity} value={selection.quantity}>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select></p>
 
-                <div class="cmp-button--primary">
-                    <button onClick={addToCart} disabled={!enableAddToCart()} class="cmp-button">
-                        <span class="cmp-button__text">Add to cart</span>
+                <div className="cmp-button--primary">
+                    <button onClick={addToCart} disabled={!enableAddToCart()} className="cmp-button">
+                        <span className="cmp-button__text">Add to cart</span>
                     </button>
                 </div>
             </div>
@@ -118,6 +118,6 @@ export default function CommerceProductDetail({ product }) {
                     __html: product.description.html
                 }}
             />
-        </div>
+        </div >
     );
 }

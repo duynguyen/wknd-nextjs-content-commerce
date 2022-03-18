@@ -32,13 +32,13 @@ const MiniCart = props => {
         <div className='minicart-body'>
             <div className='minicart-item-list'>
                 {count > 0 && cart.items.map(i => (
-                    <div className="minicart-item" aria-current="true">
+                    <div key={i.uid} className="minicart-item" aria-current="true">
                         <img src={i.product.thumbnail.url} width="128" />
                         <div className="minicart-item-details">
                             <div>
                                 <h4 className='minicart-item-title'>{i.product.name}</h4>
                                 {i.configurable_options.map(o => (
-                                    <p className='minicart-item-text'>
+                                    <p key={o.configurable_product_option_value_uid} className='minicart-item-text'>
                                         <b>{o.option_label}:</b> {o.value_label}
                                     </p>
                                 ))}
