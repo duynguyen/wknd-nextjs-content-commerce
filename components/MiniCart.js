@@ -69,9 +69,8 @@ const MiniCart = props => {
         <span className='minicart-header cmp-button--primary' onClick={toggleMiniCart}>
             <span class="cart-count cmp-button">
                 <i className='wknd__icon wkndicon-cart'></i>
+                <span>{count}</span>
             </span>
-            Cart
-            <span className='cart-count cmp-button'>{count}</span>
         </span>
         {minicartBody}
     </>
