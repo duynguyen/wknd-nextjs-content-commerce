@@ -1,12 +1,19 @@
-import {getPageModel} from "../../lib/pages";
+import {getPageModelWithFallback} from "../../lib/pages";
 import CommerceCategoryPage, {getCategoryModel} from "../../components/CommerceCategoryPage";
 import React from "react";
+import {getNavigationItems} from "../../lib/navigation";
 
-const { NEXT_PUBLIC_AEM_PATH } = process.env;
+const {NEXT_PUBLIC_AEM_PATH} = process.env;
 
-export default function CatalogPage({ pagePath, category, pageModel }) {
+export default function CatalogPage({ pagePath, category, pageModel, navigationModel, page }) {
     return (
-        <CommerceCategoryPage pageModel={pageModel} pagePath={pagePath} category={category} />
+        <CommerceCategoryPage
+            pageModel={pageModel}
+            pagePath={pagePath}
+            category={category}
+            navigationModel={navigationModel}
+            currentPage={page}
+        />
     );
 }
 
@@ -14,9 +21,10 @@ export async function getStaticProps(context) {
     const page = context.query && context.query.page ? context.query.page : 1;
     const pagePath = `${NEXT_PUBLIC_AEM_PATH}/catalog`;
 
-    const [categoryModel, aemModel] = await Promise.all([
+    const [categoryModel, aemModel, navigationModel] = await Promise.all([
         getCategoryModel(page),
-        getPageModel(pagePath)
+        getPageModelWithFallback(NEXT_PUBLIC_AEM_PATH, NEXT_PUBLIC_AEM_PATH),
+        getNavigationItems()
     ]);
 
     const category = categoryModel?.data?.categoryList.length > 0 ? categoryModel?.data?.categoryList[0] : null;
@@ -25,7 +33,9 @@ export async function getStaticProps(context) {
         props: {
             pagePath,
             category: category,
-            pageModel: aemModel
+            pageModel: aemModel,
+            navigationModel,
+            page
         }
     };
 }
