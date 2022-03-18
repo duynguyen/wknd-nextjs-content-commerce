@@ -7,7 +7,7 @@ const MiniCart = props => {
     const [cart, { dispatch }] = useCartContext();
     console.log('cart', cart);
 
-    const count = cart.items ? cart.items.length : 0;
+    const count = cart.items ? cart.total_quantity : 0;
 
     const toggleMiniCart = () => {
         setOpen(!open);
