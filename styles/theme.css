@@ -5838,7 +5838,7 @@ p {
   padding-inline-start: 0;
 }
 .cmp-navigation__item {
-  display: block;
+  display: grid;
   float: left;
 }
 .cmp-navigation__item-link {
@@ -5862,6 +5862,15 @@ p {
 .cmp-navigation__item--level-1:hover > .cmp-navigation__group {
   display: block;
 }
+
+.cmp-navigation__item--level-1:hover > .cmp-navigation__group {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  position: absolute;
+  top: 140px;
+}
+
 .cmp-navigation__item.cmp-navigation__item--level-2 {
   float: none;
 }
