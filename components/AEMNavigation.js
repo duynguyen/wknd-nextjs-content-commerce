@@ -16,14 +16,24 @@ export const NavigationConfig = {
 };
 
 export class Navigation extends Component {
+    constructor(props) {
+        super(props);
+        this.hasCatalog = false;
+        this.getContentItems = this.getContentItems.bind(this);
+    }
+
     getContentItems(rootPath) {
         const { items } = this.props;
-        //console.log('items', items);
-        return items[0]?.children.map(c => ({
-            path: c.path.replace(rootPath, ''),
-            id: c.id,
-            title: c.title
-        }));
+        return items[0]?.children.map(c => {
+            if (c.title.toLowerCase() === 'catalog') {
+                this.hasCatalog = true;
+            }
+            return {
+                path: c.path.replace(rootPath, ''),
+                id: c.id,
+                title: c.title
+            }
+        });
     }
 
     render() {
@@ -38,32 +48,45 @@ export class Navigation extends Component {
                 <GlobalConsumer>
                     {(globalContext) => (
                         <ul className='cmp-navigation__group'>
-                            {this.getContentItems(globalContext.rootPath).map(c =>
-                                <li className='cmp-navigation__item cmp-navigation__item--level-1' key={c.id}>
-                                    <Link href={`${c.path}`}>
-                                        <a className='cmp-navigation__item-link'>{c.title}</a>
+                            {this.getContentItems(globalContext.rootPath).map(ci =>
+                                <li className='cmp-navigation__item cmp-navigation__item--level-1' key={ci.id}>
+                                    <Link href={`${ci.path}`}>
+                                        <a className='cmp-navigation__item-link'>{ci.title}</a>
                                     </Link>
+                                    {(ci.title.toLowerCase() === 'catalog' && appliedCssClassNames !== 'cmp-navigation--footer') &&
+                                        <ul className='cmp-navigation__group'>
+                                            <NavigationConsumer>
+                                                {(categories) => categories.map(c =>
+                                                    <li className='cmp-navigation__item cmp-navigation__item--level-2' key={c.uid}>
+                                                        <Link href={`/catalog/${c.url_path}`}>
+                                                            <a className='cmp-navigation__item-link'>{c.name}</a>
+                                                        </Link>
+                                                    </li>
+                                                )}
+                                            </NavigationConsumer>
+                                        </ul>
+                                    }
                                 </li>
                             )}
-                            <li className='cmp-navigation__item cmp-navigation__item--level-1'>
-                                <Link href='/catalog'>
-                                    <a className='cmp-navigation__item-link'>Catalog</a>
-                                </Link>
-                                {appliedCssClassNames !== 'cmp-navigation--footer' &&
-                                    <ul className='cmp-navigation__group'>
-                                        <NavigationConsumer>
-                                            {(categories) => categories.map(c =>
-                                                <li className='cmp-navigation__item cmp-navigation__item--level-2' key={c.uid}>
-                                                    <Link href={`/catalog/${c.url_path}`}>
-                                                        <a className='cmp-navigation__item-link'>{c.name}</a>
-                                                    </Link>
-                                                </li>
-                                            )}
-                                        </NavigationConsumer>
-                                    </ul>
-                                }
-                            </li>
-
+                            {(!this.hasCatalog && appliedCssClassNames !== 'cmp-navigation--footer') &&
+                                <li className='cmp-navigation__item cmp-navigation__item--level-1'>
+                                    <Link href='/catalog'>
+                                        <a className='cmp-navigation__item-link'>Catalog</a>
+                                    </Link>
+                                    {appliedCssClassNames !== 'cmp-navigation--footer' &&
+                                        <ul className='cmp-navigation__group'>
+                                            <NavigationConsumer>
+                                                {(categories) => categories.map(c =>
+                                                    <li className='cmp-navigation__item cmp-navigation__item--level-2' key={c.uid}>
+                                                        <Link href={`/catalog/${c.url_path}`}>
+                                                            <a className='cmp-navigation__item-link'>{c.name}</a>
+                                                        </Link>
+                                                    </li>
+                                                )}
+                                            </NavigationConsumer>
+                                        </ul>
+                                    }
+                                </li>}
                         </ul>
                     )}
                 </GlobalConsumer>

@@ -7852,6 +7852,7 @@ body.anonymous .cmp-teaser--secure .cmp-teaser__action-container {
   position: fixed;
   cursor: pointer;
   top: 0;
+  height: 25px;
 }
 .minicart-item-list {
   z-index: 2000;
@@ -7921,6 +7922,8 @@ button.cmp-button:disabled {
   text-align: center;
   font-size: 18px;
   height: auto;
+  display: flex;
+  justify-content: space-around;
 }
 .minicart-empty {
   padding: 0 30px;
@@ -7928,4 +7931,11 @@ button.cmp-button:disabled {
 .priduct-quantity {
   width: 50px;
   height: 24px;
+}
+.cart-count > .wknd__icon {
+  padding-top: 2px;
+}
+.product-quantity {
+  width: 50px;
+  height: 25px;
 }
