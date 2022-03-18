@@ -69,6 +69,7 @@ export default function CommerceProductDetail({ product }) {
 
     return (
         <div className={styles.grid}>
+            <div className='fake-header'></div>
             <div className={styles.name}>
                 <h1>{product.name}</h1>
             </div>

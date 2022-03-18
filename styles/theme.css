@@ -7890,6 +7890,7 @@ body.anonymous .cmp-teaser--secure .cmp-teaser__action-container {
 }
 .minicart-item-delete {
   cursor: pointer;
+  height: fit-content;
 }
 .fake-header {
   background-color: #202020;
@@ -7899,6 +7900,8 @@ body.anonymous .cmp-teaser--secure .cmp-teaser__action-container {
   position: fixed;
   width: 100%;
   z-index: 1999;
+  top: 0;
+  left: 0;
 }
 .minicart-total {
   border-top-style: solid;

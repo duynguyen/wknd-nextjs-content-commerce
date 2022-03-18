@@ -66,7 +66,6 @@ const MiniCart = props => {
     )
 
     return <>
-        <div className='fake-header'></div>
         <span className='minicart-header cmp-button--primary' onClick={toggleMiniCart}>
             <i className='wknd__icon wkndicon-cart'></i>
             Cart
