@@ -1,0 +1,32 @@
+.root {
+  display: grid;
+  max-width: 600px;
+
+  min-width: 300px;
+  min-height: 400px;
+  justify-content: center;
+}
+
+.placeHolder {
+  composes: root;
+  border: dashed gray 1px;
+  align-content: center;
+}
+
+.image {
+
+}
+
+.link {
+  color: #202020;
+}
+
+.title {
+  text-align: center;
+}
+
+.price {
+  text-align: center;
+  font-weight: 800;
+  font-size:x-large;
+}

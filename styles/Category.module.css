@@ -1,18 +1,126 @@
-.productlist {
+.category_root {
+
+}
+
+.main {
+    min-height: 100vh;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Asar, Georgia, Times New Roman, Times, serif;
+}
+
+.category_header {
+    font-size: 40px;
+    font-weight: 400;
+    padding-inline-start: 40px;
+    background: white;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.category_header_no_image {
+    font-size: 40px;
+    font-weight: 400;
+    padding-inline-start: 250px;
+    background: white;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.category_image {
+    height: 210px;
+    padding-inline-start: 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.category_image img {
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.category_body {
     display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 250px auto;
+    grid-template-rows: max-content max-content max-content auto;
+    max-width: 894pt;
+    z-index: 2;
+}
+
+.productlist {
+    background: white;
+    display: grid;
+    grid-gap: 1rem;
     grid-template-columns: repeat(3,1fr);
 }
 
-.productlist_item {
+.category_children {
+    background: white;
+    color: #202020;
+    font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+    list-style: none;
+}
 
+.category_child {
+    color: #202020;
+}
+
+.productlist_item {
+    border: 2px solid #ebebeb;
+    display: grid;
+    grid-template-rows: 265px 50px 50px;
+    max-width: 280px;
+    width: 100%;
+    color: #202020;
+    font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+.productlist_item_image {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.productlist_item_image img{
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+}
+
+.productlist_item_title {
+    font-size: 18px;
+    padding-left: 1pc;
+}
+
+.productlist_item_price {
+    font-size: 24px;
+    padding-left: 1pc;
 }
 
 .pagination {
     display: flex;
     grid-column-gap: 1pc;
+    grid-column: 2;
     justify-content: center;
 }
 
 .pagination_item {
     text-decoration: none;
+    color: #202020;
+    font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+.pagination_item_current {
+    text-decoration: none;
+    font-weight: 600;
+    color: #202020;
+    font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
 }

@@ -31,7 +31,6 @@ export default async function middleware(req) {
 	const route = json?.data?.route
 
 	if (!route) {
-		console.log({ errors: json.errors })
 		return NextResponse.next()
 	}
 

@@ -1,11 +1,13 @@
 .main {
-    min-height: 100vh;
+    
     padding: 4rem 0;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 auto;
+    max-width: 105pc;
 }
 
 .content {
@@ -15,7 +17,6 @@
 }
 
 .grid {
-    width: 75%;
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-template-rows: 0.25fr 1fr 1fr;
