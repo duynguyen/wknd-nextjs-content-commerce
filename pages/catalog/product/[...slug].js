@@ -92,8 +92,8 @@ export async function getServerSideProps(context) {
             query: gql`{
                 products(filter: {url_key: {eq: "${slug}"}}) {
                     items {
-                        name 
-                        sku   
+                        name
+                        sku
                         description {
                             html
                         }
@@ -106,6 +106,17 @@ export async function getServerSideProps(context) {
                                 amount {
                                     currency
                                     value
+                                }
+                            }
+                        }
+                        ...on ConfigurableProduct {
+                            configurable_options {
+                                attribute_code
+                                label
+                                uid
+                                values {
+                                    label
+                                    uid
                                 }
                             }
                         }
