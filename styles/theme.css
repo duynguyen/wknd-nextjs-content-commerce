@@ -7935,3 +7935,7 @@ button.cmp-button:disabled {
 .cart-count > .wknd__icon {
   padding-top: 2px;
 }
+.product-quantity {
+  width: 50px;
+  height: 25px;
+}
