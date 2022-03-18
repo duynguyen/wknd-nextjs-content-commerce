@@ -7852,6 +7852,7 @@ body.anonymous .cmp-teaser--secure .cmp-teaser__action-container {
   position: fixed;
   cursor: pointer;
   top: 0;
+  height: 25px;
 }
 .minicart-item-list {
   z-index: 2000;
