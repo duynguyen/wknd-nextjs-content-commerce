@@ -2834,6 +2834,10 @@
   .aem-Grid > .aem-GridColumn.aem-GridColumn--phone--hide {
     display: none;
   }
+  .minicart-header,
+  .minicart-item-list {
+    right: 5em;
+  }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
   .aem-Grid.aem-Grid--1 > .aem-GridColumn.aem-GridColumn--tablet--1 {
@@ -4258,6 +4262,10 @@
   .aem-Grid > .aem-GridColumn.aem-GridColumn--tablet--hide {
     display: none;
   }
+  .minicart-header,
+  .minicart-item-list {
+    right: 8em;
+  }
 }
 .aem-Grid {
   display: block;
@@ -5431,6 +5439,10 @@ p {
     float: unset !important;
     margin: 0 auto !important;
     max-width: 873pt !important;
+  }
+  .minicart-header,
+  .minicart-item-list {
+    right: 10em;
   }
 }
 .cmp-layoutcontainer--footer {
@@ -7831,4 +7843,89 @@ body.anonymous .cmp-teaser--secure .cmp-teaser__action-container {
 .cmp-CommerceMiniCart__miniCart__emptyMessage {
   font-weight: 700;
   margin: auto;
+}
+.minicart-header {
+  background-color: #fff;
+  z-index: 2000;
+  display: flex;
+  column-gap: 1rem;
+  position: fixed;
+  cursor: pointer;
+  top: 0;
+}
+.minicart-item-list {
+  z-index: 2000;
+  position: fixed;
+  top: 25px;
+  width: auto;
+  max-width: 460px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.minicart-item {
+  gap: 1rem;
+  display: flex;
+  position: relative;
+  padding: 0.5rem 1rem;
+  color: #212529;
+  text-decoration: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+.minicart-item-details {
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  display: flex;
+}
+.minicart-item-title,
+.minicart-item-text {
+  margin: 0;
+}
+.minicart-item-text {
+  font-size: 16px;
+  line-height: 2;
+}
+.minicart-item-delete {
+  cursor: pointer;
+  height: fit-content;
+}
+.fake-header {
+  background-color: #202020;
+  color: #f7f7f7;
+  font-size: 14px;
+  min-height: 25px;
+  position: fixed;
+  width: 100%;
+  z-index: 1999;
+  top: 0;
+  left: 0;
+}
+.minicart-total {
+  border-top-style: solid;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+button.cmp-button {
+  cursor: pointer;
+  border: none;
+}
+button.cmp-button:disabled {
+  opacity: 0.6;
+}
+.cart-count.cmp-button {
+  text-align: center;
+  font-size: 18px;
+  height: auto;
+}
+.minicart-empty {
+  padding: 0 30px;
+}
+.priduct-quantity {
+  width: 50px;
+  height: 24px;
 }

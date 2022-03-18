@@ -5,6 +5,7 @@ import { Utils } from '@adobe/aem-react-editable-components';
 import client from '../../../lib/CommerceGraphQLClient';
 import ResponsiveGrid from '../../../components/AEMResponsiveGrid';
 import CommerceProductDetail from '../../../components/CommerceProductDetail';
+import MiniCart from '../../../components/MiniCart';
 import styles from '../../../styles/Product.module.css';
 import {
     getComponentModel,
@@ -14,6 +15,7 @@ import {
     getNavigationItems,
     NavigationProvider
 } from '../../../lib/navigation';
+import { ExperienceFragment } from "../../../components/AEMExperienceFragment";
 
 export default function ProductPage({
     pagePath,
@@ -36,42 +38,35 @@ export default function ProductPage({
     );
 
     return (
-        <NavigationProvider value={commerceItems}>
-            <Head>
-                <title>{product.name}</title>
-            </Head>
-            <ResponsiveGrid
-                {...headerXFModel}
-                model={headerXFModel}
-                pagePath={pagePath}
-                itemPath="root/experiencefragment"
-            />
-            <main className={styles.main}>
-                <div className={styles.content}>
-                    <ResponsiveGrid
-                        {...topContentModel}
-                        model={topContentModel}
-                        pagePath={pagePath}
-                        itemPath="top"
-                    />
-                </div>
-                <CommerceProductDetail product={product} />
-                <div className={styles.content}>
-                    <ResponsiveGrid
-                        {...bottomContentModel}
-                        model={bottomContentModel}
-                        pagePath={pagePath}
-                        itemPath="bottom"
-                    />
-                </div>
-            </main>
-            <ResponsiveGrid
-                {...footerXFModel}
-                model={footerXFModel}
-                pagePath={pagePath}
-                itemPath="root/experiencefragment_1327121818"
-            />
-        </NavigationProvider>
+        <div className='root'>
+            <NavigationProvider value={commerceItems}>
+                <Head>
+                    <title>{product.name}</title>
+                </Head>
+                <MiniCart />
+                <ExperienceFragment {...headerXFModel} />
+                <main className={styles.main}>
+                    <div className={styles.content}>
+                        <ResponsiveGrid
+                            {...topContentModel}
+                            model={topContentModel}
+                            pagePath={pagePath}
+                            itemPath="top"
+                        />
+                    </div>
+                    <CommerceProductDetail product={product} />
+                    <div className={styles.content}>
+                        <ResponsiveGrid
+                            {...bottomContentModel}
+                            model={bottomContentModel}
+                            pagePath={pagePath}
+                            itemPath="bottom"
+                        />
+                    </div>
+                </main>
+                <ExperienceFragment {...footerXFModel} />
+            </NavigationProvider>
+        </div>
     );
 }
 
@@ -125,8 +120,8 @@ export async function getStaticProps(context) {
             query: gql`{
                 products(filter: {url_key: {eq: "${slug}"}}) {
                     items {
-                        name 
-                        sku   
+                        name
+                        sku
                         description {
                             html
                         }
@@ -139,6 +134,17 @@ export async function getStaticProps(context) {
                                 amount {
                                     currency
                                     value
+                                }
+                            }
+                        }
+                        ...on ConfigurableProduct {
+                            configurable_options {
+                                attribute_code
+                                label
+                                uid
+                                values {
+                                    label
+                                    uid
                                 }
                             }
                         }

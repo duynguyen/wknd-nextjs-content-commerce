@@ -3,6 +3,7 @@ import { ModelManager } from '@adobe/aem-spa-page-model-manager'
 import CustomModelClient from '../lib/CustomModelClient'
 import { GlobalProvider } from '../lib/globalContext';
 import '../components/import-components'
+import CartContextProvider from '../lib/cartContext';
 
 const contextValue = {
   aemHost: process.env.NEXT_PUBLIC_AEM_HOST,
@@ -17,7 +18,9 @@ ModelManager.initializeAsync({
 export default function App({ Component, pageProps }) {
   return (
     <GlobalProvider value={contextValue}>
-      <Component {...pageProps} />
+      <CartContextProvider>
+        <Component {...pageProps} />
+      </CartContextProvider>
     </GlobalProvider>
   )
 }

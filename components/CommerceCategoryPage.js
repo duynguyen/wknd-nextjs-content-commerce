@@ -8,6 +8,7 @@ import client from "../lib/CommerceGraphQLClient";
 import {gql} from "@apollo/client";
 import {NavigationProvider} from "../lib/navigation";
 import categoryStyles from '../styles/Category.module.css';
+import {ExperienceFragment} from "./AEMExperienceFragment";
 
 const PAGE_SIZE = 6;
 
@@ -27,56 +28,47 @@ export default function CommerceCategoryPage({pagePath, category, navigationMode
     );
 
     return (
-        <NavigationProvider value={navigationModel}>
+        <div className='root'>
+            <NavigationProvider value={navigationModel}>
+                <Head>
+                    <title>{category ? category.name : 'Category not Found'}</title>
+                </Head>
 
-            <Head>
-                <title>{category ? category.name : 'Category not Found'}</title>
-            </Head>
+                <ExperienceFragment {...headerXFModel}/>
 
-            <ResponsiveGrid
-                {...headerXFModel}
-                model={headerXFModel}
-                pagePath={pagePath}
-                itemPath="experiencefragment-header"
-            />
+                <div className={categoryStyles.main}>
 
-            <main className={categoryStyles.main}>
+                    <div className={styles.content}>
+                        <ResponsiveGrid
+                            {...topContentModel}
+                            model={topContentModel}
+                            pagePath={pagePath}
+                            itemPath="top"
+                        />
+                    </div>
 
-                <div className={styles.content}>
-                    <ResponsiveGrid
-                        {...topContentModel}
-                        model={topContentModel}
-                        pagePath={pagePath}
-                        itemPath="top"
-                    />
+                    {category
+                        ?
+                        (<CommerceCategory slug={slug} category={category} currentPage={currentPage}/>)
+                        :
+                        (<span>Category not found.</span>)
+                    }
+
+                    <div className={styles.content}>
+                        <ResponsiveGrid
+                            {...bottomContentModel}
+                            model={bottomContentModel}
+                            pagePath={pagePath}
+                            itemPath="bottom"
+                        />
+                    </div>
+
                 </div>
 
-                {category
-                    ?
-                    (<CommerceCategory slug={slug} category={category} currentPage={currentPage}/>)
-                    :
-                    (<span>Category not found.</span>)
-                }
+                <ExperienceFragment {...footerXFModel}/>
 
-                <div className={styles.content}>
-                    <ResponsiveGrid
-                        {...bottomContentModel}
-                        model={bottomContentModel}
-                        pagePath={pagePath}
-                        itemPath="bottom"
-                    />
-                </div>
-
-            </main>
-
-            <ResponsiveGrid
-                {...footerXFModel}
-                model={footerXFModel}
-                pagePath={pagePath}
-                itemPath="experiencefragment-footer"
-            />
-
-        </NavigationProvider>
+            </NavigationProvider>
+        </div>
     );
 }
 
